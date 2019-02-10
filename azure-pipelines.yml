@@ -1,0 +1,19 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+steps:
+
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: 1fbdb4bb-441e-4922-ba1f-ffd04f533ea1
+    connectedServiceNameARM: camino
+    scriptLocation: inlineScript
+    inlineScript: 'az acr login -g camino -n camino'
+  displayName: 'Login to ACR.'
+
+- script: 'PRIVATE_REPO=camino.azurecr.io ./build.sh'
