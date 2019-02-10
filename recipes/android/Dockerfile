@@ -8,6 +8,35 @@
 # Contributors:
 #   Red Hat, Inc. - initial API and implementation
 
+FROM eclipse/stack-base:centos as download
+
+ENV ANDROID_HOME=/home/user/android-sdk-linux
+ENV MAVEN_VERSION=3.5.3
+ENV PATH=$M2_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+
+WORKDIR /home/user
+USER user
+RUN wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
+    unzip sdk-tools-linux-4333796.zip && \
+    rm sdk-tools-linux-4333796.zip 
+RUN tools/bin/sdkmanager "platform-tools" "platforms;android-27" "platforms;android-28" "ndk-bundle" "system-images;android-27;google_apis;x86"
+RUN yes | tools/bin/sdkmanager --licenses
+RUN mkdir -p .android/avd
+#RUN tools/bin/avdmanager create avd -n che -k "system-images;android-27;google_apis;x86"
+RUN for f in "${HOME}/.android" "${HOME}/tools"; do \
+      sudo chgrp -R 0 ${f} && \
+      sudo chmod -R g+rwX ${f}; \
+    done
+
+RUN wget https://services.gradle.org/distributions/gradle-3.4.1-bin.zip && \
+    unzip gradle-3.4.1-bin.zip && \
+    mv gradle-3.4.1 gradle && \
+    rm gradle-3.4.1-bin.zip
+
+RUN mkdir -p ${HOME}/apache-maven
+RUN wget -qO- "https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz" | \
+      tar -zx --strip-components=1 -C ${HOME}/apache-maven/
+
 FROM eclipse/stack-base:centos
 
 ENV DISPLAY=:1 \
@@ -23,11 +52,10 @@ ENV DISPLAY=:1 \
     VNC_PW=vncpassword \
     VNC_VIEW_ONLY=false \
     LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8' \
-    ANDROID_HOME=/home/user/android-sdk-linux \
-    PATH=$M2_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH \
-    MAVEN_VERSION=3.5.3
-ENV M2_HOME=/home/user/apache-maven-$MAVEN_VERSION
-ENV PATH=$M2_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+    ANDROID_HOME=/home/user \
+    M2_HOME=/home/user/apache-maven \
+    GRADLE_HOME=/home/user/gradle
+ENV PATH=$M2_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$GRADLE_HOME/bin:$PATH
 
 
 EXPOSE $VNC_PORT $NO_VNC_PORT
@@ -37,9 +65,6 @@ RUN sudo mkdir -p ${NO_VNC_HOME}/utils/websockify && \
     sudo wget -qO- https://github.com/kanaka/websockify/archive/v0.8.0.tar.gz | sudo tar xz --strip 1 -C ${NO_VNC_HOME}/utils/websockify && \
     sudo chmod +x -v ${NO_VNC_HOME}/utils/*.sh && \
     sudo ln -s ${NO_VNC_HOME}/vnc_auto.html ${NO_VNC_HOME}/index.html && \
-    mkdir -p ${HOME}/apache-maven-3.5.3 && \
-    cd ${HOME} && wget -qO- "https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz" | \
-                  tar -zx --strip-components=1 -C /home/user/apache-maven-$MAVEN_VERSION/ && \
     sudo yum -y install epel-release && \
     sudo yum -y update && \
     sudo yum -y install -y which net-tools tigervnc-server nss_wrapper gettext \
@@ -55,24 +80,16 @@ USER root
 RUN /bin/dbus-uuidgen > /etc/machine-id
 USER user
 
+COPY --from=download ${HOME} ${HOME}
 ADD Desktop ${HOME}/Desktop
 ADD vnc_start.sh ${STARTUPDIR}/vnc_start.sh
 RUN sudo mkdir -p /dockerstartup && \
-    for f in "${STARTUPDIR}" "/headless" "${HOME}"; do \
+    for f in "${STARTUPDIR}" "/headless" "${HOME}/Desktop"; do \
            sudo chgrp -R 0 ${f} && \
            sudo chmod -R g+rwX ${f}; \
         done && \
     sudo chmod +x ${STARTUPDIR}/vnc_start.sh && \
     sudo chmod -R 777 ${STARTUPDIR} && \
-    sudo chmod +x ${HOME}/Desktop/*.desktop && \
-    cd /home/user && wget --output-document=android-sdk.tgz --quiet http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && tar -xvf android-sdk.tgz && rm android-sdk.tgz && \
-    echo y | android update sdk --all --force --no-ui --filter platform-tools,build-tools-21.1.1,android-21,sys-img-armeabi-v7a-android-21 && \
-    echo "no" | android create avd \
-                --name che \
-                --target android-21 \
-                --abi armeabi-v7a && \
-    for f in "${HOME}/.android" "${HOME}/android-sdk-linux"; do \
-      sudo chgrp -R 0 ${f} && \
-      sudo chmod -R g+rwX ${f}; \
-    done
+    sudo chmod +x ${HOME}/Desktop/*.desktop
+
 CMD /dockerstartup/vnc_start.sh --wait
