@@ -20,7 +20,6 @@ RUN apt-get update && \
     sudo \
     rsync \
     procps \
-    -t stretch-backports \
     openjdk-8-jdk-headless \
     openjdk-8-source \
     wget \
