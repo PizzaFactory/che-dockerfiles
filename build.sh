@@ -2,10 +2,10 @@
 
 PRIVATE_REPO=${PRIVATE_REPO:-}
 
-images=$(for i in $(find recipes -maxdepth 3 -mindepth 1 -type f -not -path '*/\.*' -name Dockerfile -print ); do a=${i#recipes/}; b=${a%/Dockerfile}; case $b in */*) c=${b/\//:};; *) c=$b:latest;; esac; from=$(grep FROM $i | sed -e 's/\s//g'); echo ${from#FROM} eclipse/$c; done | tsort)
+images=$(for i in $(find recipes -maxdepth 3 -mindepth 1 -type f -not -path '*/\.*' -name Dockerfile -print ); do a=${i#recipes/}; b=${a%/Dockerfile}; case $b in */*) c=${b/\//:};; *) c=$b:latest;; esac; from=$(grep FROM $i | sed -e 's/\s//g'); echo eclipse/$c ${from#FROM}; done | tsort)
 
-external_images=$(echo "$images" | grep -v eclipse/)
-eclipse_images=$(echo "$images" | grep eclipse/)
+external_images=$(echo "$images" | grep -v eclipse/ | tac)
+eclipse_images=$(echo "$images" | grep eclipse/ | tac)
 
 function error() {
   echo $1 > /dev/stderr
