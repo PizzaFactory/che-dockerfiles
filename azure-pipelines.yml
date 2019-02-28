@@ -1,19 +1,1879 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+jobs:
 
-pool:
-  vmImage: 'Ubuntu 16.04'
 
-steps:
+### recipes/alpine_jdk8/Dockerfile eclipse/alpine_jdk8 depends on openjdk:8u111-jre-alpine openjdk/8u111-jre-alpine
+  - job: "recipes__alpine_jdk8__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
 
-- task: Docker@1
-  displayName: 'Login to ACR.'
-  inputs:
-    command: login
-    dockerRegistryEndpoint: camino.azurecr.io
-    containerregistrytype: Container Registry
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
 
-- script: PRIVATE_REPO=camino.azurecr.io ./build.sh
-  displayName: 'Build and push containers.'
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/alpine_jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/alpine_jdk8 eclipse/alpine_jdk8
+        else
+          docker pull eclipse/alpine_jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/alpine_jdk8
+        fi
+        docker pull camino.azurecr.io/openjdk:8u111-jre-alpine
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/openjdk:8u111-jre-alpine openjdk:8u111-jre-alpine
+        else
+          docker pull openjdk:8u111-jre-alpine
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch openjdk:8u111-jre-alpine
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/alpine_jdk8/Dockerfile --cache-from eclipse/alpine_jdk8 -t camino.azurecr.io/eclipse/alpine_jdk8 recipes/alpine_jdk8
+      displayName: "Building camino.azurecr.io/eclipse/alpine_jdk8"
+    - script: docker push camino.azurecr.io/eclipse/alpine_jdk8
+      displayName: "Pushing camino.azurecr.io/eclipse/alpine_jdk8"
+
+### recipes/android/Dockerfile eclipse/android depends on eclipse/stack-base:centos recipes/stack-base/centos
+  - job: "recipes__android__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__centos__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/android
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/android eclipse/android
+        else
+          docker pull eclipse/android
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/android
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:centos
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:centos eclipse/stack-base:centos
+        else
+          docker pull eclipse/stack-base:centos
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:centos
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/android/Dockerfile --cache-from eclipse/android -t camino.azurecr.io/eclipse/android recipes/android
+      displayName: "Building camino.azurecr.io/eclipse/android"
+    - script: docker push camino.azurecr.io/eclipse/android
+      displayName: "Pushing camino.azurecr.io/eclipse/android"
+
+### recipes/angular/Dockerfile eclipse/angular depends on eclipse/node recipes/node
+  - job: "recipes__angular__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__node__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/angular
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/angular eclipse/angular
+        else
+          docker pull eclipse/angular
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/angular
+        fi
+        docker pull camino.azurecr.io/eclipse/node
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/node eclipse/node
+        else
+          docker pull eclipse/node
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/node
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/angular/Dockerfile --cache-from eclipse/angular -t camino.azurecr.io/eclipse/angular recipes/angular
+      displayName: "Building camino.azurecr.io/eclipse/angular"
+    - script: docker push camino.azurecr.io/eclipse/angular
+      displayName: "Pushing camino.azurecr.io/eclipse/angular"
+
+### recipes/centos_ceylon_nodejs_dart/Dockerfile eclipse/centos_ceylon_nodejs_dart depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+  - job: "recipes__centos_ceylon_nodejs_dart__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart eclipse/centos_ceylon_nodejs_dart
+        else
+          docker pull eclipse/centos_ceylon_nodejs_dart
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_ceylon_nodejs_dart
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+        else
+          docker pull registry.centos.org/che-stacks/centos-jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-jdk8
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_ceylon_nodejs_dart/Dockerfile --cache-from eclipse/centos_ceylon_nodejs_dart -t camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart recipes/centos_ceylon_nodejs_dart
+      displayName: "Building camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart"
+    - script: docker push camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart"
+
+### recipes/centos_dotnet20/Dockerfile eclipse/centos_dotnet20 depends on registry.centos.org/che-stacks/centos-stack-base:latest registry.centos.org/che-stacks/centos-stack-base/latest
+  - job: "recipes__centos_dotnet20__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_dotnet20
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_dotnet20 eclipse/centos_dotnet20
+        else
+          docker pull eclipse/centos_dotnet20
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_dotnet20
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base:latest
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base:latest registry.centos.org/che-stacks/centos-stack-base:latest
+        else
+          docker pull registry.centos.org/che-stacks/centos-stack-base:latest
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-stack-base:latest
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_dotnet20/Dockerfile --cache-from eclipse/centos_dotnet20 -t camino.azurecr.io/eclipse/centos_dotnet20 recipes/centos_dotnet20
+      displayName: "Building camino.azurecr.io/eclipse/centos_dotnet20"
+    - script: docker push camino.azurecr.io/eclipse/centos_dotnet20
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_dotnet20"
+
+### recipes/centos_go/Dockerfile eclipse/centos_go depends on registry.centos.org/che-stacks/centos-nodejs registry.centos.org/che-stacks/centos-nodejs
+  - job: "recipes__centos_go__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_go
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_go eclipse/centos_go
+        else
+          docker pull eclipse/centos_go
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_go
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-nodejs
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-nodejs registry.centos.org/che-stacks/centos-nodejs
+        else
+          docker pull registry.centos.org/che-stacks/centos-nodejs
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-nodejs
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_go/Dockerfile --cache-from eclipse/centos_go -t camino.azurecr.io/eclipse/centos_go recipes/centos_go
+      displayName: "Building camino.azurecr.io/eclipse/centos_go"
+    - script: docker push camino.azurecr.io/eclipse/centos_go
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_go"
+
+### recipes/centos_jdk8/Dockerfile eclipse/centos_jdk8 depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+  - job: "recipes__centos_jdk8__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_jdk8 eclipse/centos_jdk8
+        else
+          docker pull eclipse/centos_jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_jdk8
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+        else
+          docker pull registry.centos.org/che-stacks/centos-stack-base
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-stack-base
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_jdk8/Dockerfile --cache-from eclipse/centos_jdk8 -t camino.azurecr.io/eclipse/centos_jdk8 recipes/centos_jdk8
+      displayName: "Building camino.azurecr.io/eclipse/centos_jdk8"
+    - script: docker push camino.azurecr.io/eclipse/centos_jdk8
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_jdk8"
+
+### recipes/centos_nodejs/Dockerfile eclipse/centos_nodejs depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+  - job: "recipes__centos_nodejs__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_nodejs
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_nodejs eclipse/centos_nodejs
+        else
+          docker pull eclipse/centos_nodejs
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_nodejs
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+        else
+          docker pull registry.centos.org/che-stacks/centos-stack-base
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-stack-base
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_nodejs/Dockerfile --cache-from eclipse/centos_nodejs -t camino.azurecr.io/eclipse/centos_nodejs recipes/centos_nodejs
+      displayName: "Building camino.azurecr.io/eclipse/centos_nodejs"
+    - script: docker push camino.azurecr.io/eclipse/centos_nodejs
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_nodejs"
+
+### recipes/centos_python/2/Dockerfile eclipse/centos_python:2 depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+  - job: "recipes__centos_python__2__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_python:2
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_python:2 eclipse/centos_python:2
+        else
+          docker pull eclipse/centos_python:2
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_python:2
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+        else
+          docker pull registry.centos.org/che-stacks/centos-stack-base
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-stack-base
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_python/2/Dockerfile --cache-from eclipse/centos_python:2 -t camino.azurecr.io/eclipse/centos_python:2 recipes/centos_python/2
+      displayName: "Building camino.azurecr.io/eclipse/centos_python:2"
+    - script: docker push camino.azurecr.io/eclipse/centos_python:2
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_python:2"
+
+### recipes/centos_python/3/Dockerfile eclipse/centos_python:3 depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+  - job: "recipes__centos_python__3__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_python:3
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_python:3 eclipse/centos_python:3
+        else
+          docker pull eclipse/centos_python:3
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_python:3
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+        else
+          docker pull registry.centos.org/che-stacks/centos-stack-base
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-stack-base
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_python/3/Dockerfile --cache-from eclipse/centos_python:3 -t camino.azurecr.io/eclipse/centos_python:3 recipes/centos_python/3
+      displayName: "Building camino.azurecr.io/eclipse/centos_python:3"
+    - script: docker push camino.azurecr.io/eclipse/centos_python:3
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_python:3"
+
+### recipes/centos_spring_boot/Dockerfile eclipse/centos_spring_boot depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+  - job: "recipes__centos_spring_boot__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_spring_boot
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_spring_boot eclipse/centos_spring_boot
+        else
+          docker pull eclipse/centos_spring_boot
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_spring_boot
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+        else
+          docker pull registry.centos.org/che-stacks/centos-jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-jdk8
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_spring_boot/Dockerfile --cache-from eclipse/centos_spring_boot -t camino.azurecr.io/eclipse/centos_spring_boot recipes/centos_spring_boot
+      displayName: "Building camino.azurecr.io/eclipse/centos_spring_boot"
+    - script: docker push camino.azurecr.io/eclipse/centos_spring_boot
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_spring_boot"
+
+### recipes/centos_vertx/Dockerfile eclipse/centos_vertx depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+  - job: "recipes__centos_vertx__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_vertx
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_vertx eclipse/centos_vertx
+        else
+          docker pull eclipse/centos_vertx
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_vertx
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+        else
+          docker pull registry.centos.org/che-stacks/centos-jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-jdk8
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_vertx/Dockerfile --cache-from eclipse/centos_vertx -t camino.azurecr.io/eclipse/centos_vertx recipes/centos_vertx
+      displayName: "Building camino.azurecr.io/eclipse/centos_vertx"
+    - script: docker push camino.azurecr.io/eclipse/centos_vertx
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_vertx"
+
+### recipes/centos_wildfly_swarm/Dockerfile eclipse/centos_wildfly_swarm depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+  - job: "recipes__centos_wildfly_swarm__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/centos_wildfly_swarm
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/centos_wildfly_swarm eclipse/centos_wildfly_swarm
+        else
+          docker pull eclipse/centos_wildfly_swarm
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/centos_wildfly_swarm
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+        else
+          docker pull registry.centos.org/che-stacks/centos-jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/che-stacks/centos-jdk8
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/centos_wildfly_swarm/Dockerfile --cache-from eclipse/centos_wildfly_swarm -t camino.azurecr.io/eclipse/centos_wildfly_swarm recipes/centos_wildfly_swarm
+      displayName: "Building camino.azurecr.io/eclipse/centos_wildfly_swarm"
+    - script: docker push camino.azurecr.io/eclipse/centos_wildfly_swarm
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_wildfly_swarm"
+
+### recipes/cpp_gcc/Dockerfile eclipse/cpp_gcc depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__cpp_gcc__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/cpp_gcc
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/cpp_gcc eclipse/cpp_gcc
+        else
+          docker pull eclipse/cpp_gcc
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/cpp_gcc
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/cpp_gcc/Dockerfile --cache-from eclipse/cpp_gcc -t camino.azurecr.io/eclipse/cpp_gcc recipes/cpp_gcc
+      displayName: "Building camino.azurecr.io/eclipse/cpp_gcc"
+    - script: docker push camino.azurecr.io/eclipse/cpp_gcc
+      displayName: "Pushing camino.azurecr.io/eclipse/cpp_gcc"
+
+### recipes/debian_jdk8/Dockerfile eclipse/debian_jdk8 depends on eclipse/stack-base:debian recipes/stack-base/debian
+  - job: "recipes__debian_jdk8__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__debian__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/debian_jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/debian_jdk8 eclipse/debian_jdk8
+        else
+          docker pull eclipse/debian_jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/debian_jdk8
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
+        else
+          docker pull eclipse/stack-base:debian
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:debian
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/debian_jdk8/Dockerfile --cache-from eclipse/debian_jdk8 -t camino.azurecr.io/eclipse/debian_jdk8 recipes/debian_jdk8
+      displayName: "Building camino.azurecr.io/eclipse/debian_jdk8"
+    - script: docker push camino.azurecr.io/eclipse/debian_jdk8
+      displayName: "Pushing camino.azurecr.io/eclipse/debian_jdk8"
+
+### recipes/debian_jdk8_node/Dockerfile eclipse/debian_jdk8_node depends on eclipse/debian_jdk8 recipes/debian_jdk8
+  - job: "recipes__debian_jdk8_node__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__debian_jdk8__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/debian_jdk8_node
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/debian_jdk8_node eclipse/debian_jdk8_node
+        else
+          docker pull eclipse/debian_jdk8_node
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/debian_jdk8_node
+        fi
+        docker pull camino.azurecr.io/eclipse/debian_jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/debian_jdk8 eclipse/debian_jdk8
+        else
+          docker pull eclipse/debian_jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/debian_jdk8
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/debian_jdk8_node/Dockerfile --cache-from eclipse/debian_jdk8_node -t camino.azurecr.io/eclipse/debian_jdk8_node recipes/debian_jdk8_node
+      displayName: "Building camino.azurecr.io/eclipse/debian_jdk8_node"
+    - script: docker push camino.azurecr.io/eclipse/debian_jdk8_node
+      displayName: "Pushing camino.azurecr.io/eclipse/debian_jdk8_node"
+
+### recipes/dotnet_core/Dockerfile eclipse/dotnet_core depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__dotnet_core__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/dotnet_core
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/dotnet_core eclipse/dotnet_core
+        else
+          docker pull eclipse/dotnet_core
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/dotnet_core
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/dotnet_core/Dockerfile --cache-from eclipse/dotnet_core -t camino.azurecr.io/eclipse/dotnet_core recipes/dotnet_core
+      displayName: "Building camino.azurecr.io/eclipse/dotnet_core"
+    - script: docker push camino.azurecr.io/eclipse/dotnet_core
+      displayName: "Pushing camino.azurecr.io/eclipse/dotnet_core"
+
+### recipes/hadoop-dev/Dockerfile eclipse/hadoop-dev depends on eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
+  - job: "recipes__hadoop__dev__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__ubuntu_jdk8__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/hadoop-dev
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/hadoop-dev eclipse/hadoop-dev
+        else
+          docker pull eclipse/hadoop-dev
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/hadoop-dev
+        fi
+        docker pull camino.azurecr.io/eclipse/ubuntu_jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
+        else
+          docker pull eclipse/ubuntu_jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_jdk8
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/hadoop-dev/Dockerfile --cache-from eclipse/hadoop-dev -t camino.azurecr.io/eclipse/hadoop-dev recipes/hadoop-dev
+      displayName: "Building camino.azurecr.io/eclipse/hadoop-dev"
+    - script: docker push camino.azurecr.io/eclipse/hadoop-dev
+      displayName: "Pushing camino.azurecr.io/eclipse/hadoop-dev"
+
+### recipes/kotlin/Dockerfile eclipse/kotlin depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__kotlin__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/kotlin
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/kotlin eclipse/kotlin
+        else
+          docker pull eclipse/kotlin
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/kotlin
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/kotlin/Dockerfile --cache-from eclipse/kotlin -t camino.azurecr.io/eclipse/kotlin recipes/kotlin
+      displayName: "Building camino.azurecr.io/eclipse/kotlin"
+    - script: docker push camino.azurecr.io/eclipse/kotlin
+      displayName: "Pushing camino.azurecr.io/eclipse/kotlin"
+
+### recipes/meteor/Dockerfile eclipse/meteor depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__meteor__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/meteor
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/meteor eclipse/meteor
+        else
+          docker pull eclipse/meteor
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/meteor
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/meteor/Dockerfile --cache-from eclipse/meteor -t camino.azurecr.io/eclipse/meteor recipes/meteor
+      displayName: "Building camino.azurecr.io/eclipse/meteor"
+    - script: docker push camino.azurecr.io/eclipse/meteor
+      displayName: "Pushing camino.azurecr.io/eclipse/meteor"
+
+### recipes/mysql/Dockerfile eclipse/mysql depends on mysql:5.7 mysql/5.7
+  - job: "recipes__mysql__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/mysql
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/mysql eclipse/mysql
+        else
+          docker pull eclipse/mysql
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/mysql
+        fi
+        docker pull camino.azurecr.io/mysql:5.7
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/mysql:5.7 mysql:5.7
+        else
+          docker pull mysql:5.7
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch mysql:5.7
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/mysql/Dockerfile --cache-from eclipse/mysql -t camino.azurecr.io/eclipse/mysql recipes/mysql
+      displayName: "Building camino.azurecr.io/eclipse/mysql"
+    - script: docker push camino.azurecr.io/eclipse/mysql
+      displayName: "Pushing camino.azurecr.io/eclipse/mysql"
+
+### recipes/node/Dockerfile eclipse/node depends on eclipse/stack-base:debian recipes/stack-base/debian
+  - job: "recipes__node__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__debian__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/node
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/node eclipse/node
+        else
+          docker pull eclipse/node
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/node
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
+        else
+          docker pull eclipse/stack-base:debian
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:debian
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/node/Dockerfile --cache-from eclipse/node -t camino.azurecr.io/eclipse/node recipes/node
+      displayName: "Building camino.azurecr.io/eclipse/node"
+    - script: docker push camino.azurecr.io/eclipse/node
+      displayName: "Pushing camino.azurecr.io/eclipse/node"
+
+### recipes/php/5.6/Dockerfile eclipse/php:5.6 depends on eclipse/stack-base:debian recipes/stack-base/debian
+  - job: "recipes__php__5__6__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__debian__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/php:5.6
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/php:5.6 eclipse/php:5.6
+        else
+          docker pull eclipse/php:5.6
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/php:5.6
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
+        else
+          docker pull eclipse/stack-base:debian
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:debian
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/php/5.6/Dockerfile --cache-from eclipse/php:5.6 -t camino.azurecr.io/eclipse/php:5.6 recipes/php/5.6
+      displayName: "Building camino.azurecr.io/eclipse/php:5.6"
+    - script: docker push camino.azurecr.io/eclipse/php:5.6
+      displayName: "Pushing camino.azurecr.io/eclipse/php:5.6"
+
+### recipes/php/Dockerfile eclipse/php depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__php__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/php
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/php eclipse/php
+        else
+          docker pull eclipse/php
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/php
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/php/Dockerfile --cache-from eclipse/php -t camino.azurecr.io/eclipse/php recipes/php
+      displayName: "Building camino.azurecr.io/eclipse/php"
+    - script: docker push camino.azurecr.io/eclipse/php
+      displayName: "Pushing camino.azurecr.io/eclipse/php"
+
+### recipes/php/gae/Dockerfile eclipse/php:gae depends on eclipse/php recipes/php
+  - job: "recipes__php__gae__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__php__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/php:gae
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/php:gae eclipse/php:gae
+        else
+          docker pull eclipse/php:gae
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/php:gae
+        fi
+        docker pull camino.azurecr.io/eclipse/php
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/php eclipse/php
+        else
+          docker pull eclipse/php
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/php
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/php/gae/Dockerfile --cache-from eclipse/php:gae -t camino.azurecr.io/eclipse/php:gae recipes/php/gae
+      displayName: "Building camino.azurecr.io/eclipse/php:gae"
+    - script: docker push camino.azurecr.io/eclipse/php:gae
+      displayName: "Pushing camino.azurecr.io/eclipse/php:gae"
+
+### recipes/php/laravel/Dockerfile eclipse/php:laravel depends on eclipse/php recipes/php
+  - job: "recipes__php__laravel__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__php__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/php:laravel
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/php:laravel eclipse/php:laravel
+        else
+          docker pull eclipse/php:laravel
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/php:laravel
+        fi
+        docker pull camino.azurecr.io/eclipse/php
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/php eclipse/php
+        else
+          docker pull eclipse/php
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/php
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/php/laravel/Dockerfile --cache-from eclipse/php:laravel -t camino.azurecr.io/eclipse/php:laravel recipes/php/laravel
+      displayName: "Building camino.azurecr.io/eclipse/php:laravel"
+    - script: docker push camino.azurecr.io/eclipse/php:laravel
+      displayName: "Pushing camino.azurecr.io/eclipse/php:laravel"
+
+### recipes/platformio/Dockerfile eclipse/platformio depends on eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
+  - job: "recipes__platformio__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__ubuntu_python__2__7__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/platformio
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/platformio eclipse/platformio
+        else
+          docker pull eclipse/platformio
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/platformio
+        fi
+        docker pull camino.azurecr.io/eclipse/ubuntu_python:2.7
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_python:2.7 eclipse/ubuntu_python:2.7
+        else
+          docker pull eclipse/ubuntu_python:2.7
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_python:2.7
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/platformio/Dockerfile --cache-from eclipse/platformio -t camino.azurecr.io/eclipse/platformio recipes/platformio
+      displayName: "Building camino.azurecr.io/eclipse/platformio"
+    - script: docker push camino.azurecr.io/eclipse/platformio
+      displayName: "Pushing camino.azurecr.io/eclipse/platformio"
+
+### recipes/ruby_rails/Dockerfile eclipse/ruby_rails depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__ruby_rails__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ruby_rails
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ruby_rails eclipse/ruby_rails
+        else
+          docker pull eclipse/ruby_rails
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ruby_rails
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ruby_rails/Dockerfile --cache-from eclipse/ruby_rails -t camino.azurecr.io/eclipse/ruby_rails recipes/ruby_rails
+      displayName: "Building camino.azurecr.io/eclipse/ruby_rails"
+    - script: docker push camino.azurecr.io/eclipse/ruby_rails
+      displayName: "Pushing camino.azurecr.io/eclipse/ruby_rails"
+
+### recipes/sails/Dockerfile eclipse/sails depends on eclipse/node recipes/node
+  - job: "recipes__sails__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__node__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/sails
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/sails eclipse/sails
+        else
+          docker pull eclipse/sails
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/sails
+        fi
+        docker pull camino.azurecr.io/eclipse/node
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/node eclipse/node
+        else
+          docker pull eclipse/node
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/node
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/sails/Dockerfile --cache-from eclipse/sails -t camino.azurecr.io/eclipse/sails recipes/sails
+      displayName: "Building camino.azurecr.io/eclipse/sails"
+    - script: docker push camino.azurecr.io/eclipse/sails
+      displayName: "Pushing camino.azurecr.io/eclipse/sails"
+
+### recipes/selenium/Dockerfile eclipse/selenium depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__selenium__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/selenium
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/selenium eclipse/selenium
+        else
+          docker pull eclipse/selenium
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/selenium
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/selenium/Dockerfile --cache-from eclipse/selenium -t camino.azurecr.io/eclipse/selenium recipes/selenium
+      displayName: "Building camino.azurecr.io/eclipse/selenium"
+    - script: docker push camino.azurecr.io/eclipse/selenium
+      displayName: "Pushing camino.azurecr.io/eclipse/selenium"
+
+### recipes/stack-base/centos/Dockerfile eclipse/stack-base:centos depends on registry.centos.org/centos/centos registry.centos.org/centos/centos
+  - job: "recipes__stack__base__centos__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/stack-base:centos
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:centos eclipse/stack-base:centos
+        else
+          docker pull eclipse/stack-base:centos
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:centos
+        fi
+        docker pull camino.azurecr.io/registry.centos.org/centos/centos
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/registry.centos.org/centos/centos registry.centos.org/centos/centos
+        else
+          docker pull registry.centos.org/centos/centos
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch registry.centos.org/centos/centos
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/stack-base/centos/Dockerfile --cache-from eclipse/stack-base:centos -t camino.azurecr.io/eclipse/stack-base:centos recipes/stack-base/centos
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:centos"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:centos
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:centos"
+
+### recipes/stack-base/debian/Dockerfile eclipse/stack-base:debian depends on debian:stretch debian/stretch
+  - job: "recipes__stack__base__debian__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
+        else
+          docker pull eclipse/stack-base:debian
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:debian
+        fi
+        docker pull camino.azurecr.io/debian:stretch
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/debian:stretch debian:stretch
+        else
+          docker pull debian:stretch
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch debian:stretch
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/stack-base/debian/Dockerfile --cache-from eclipse/stack-base:debian -t camino.azurecr.io/eclipse/stack-base:debian recipes/stack-base/debian
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:debian"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:debian
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian"
+
+### recipes/stack-base/ubuntu/Dockerfile eclipse/stack-base:ubuntu depends on ubuntu:16.04 ubuntu/16.04
+  - job: "recipes__stack__base__ubuntu__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        docker pull camino.azurecr.io/ubuntu:16.04
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/ubuntu:16.04 ubuntu:16.04
+        else
+          docker pull ubuntu:16.04
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch ubuntu:16.04
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/stack-base/ubuntu/Dockerfile --cache-from eclipse/stack-base:ubuntu -t camino.azurecr.io/eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:ubuntu"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:ubuntu
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:ubuntu"
+
+### recipes/ubuntu_go/Dockerfile eclipse/ubuntu_go depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__ubuntu_go__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ubuntu_go
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_go eclipse/ubuntu_go
+        else
+          docker pull eclipse/ubuntu_go
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_go
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ubuntu_go/Dockerfile --cache-from eclipse/ubuntu_go -t camino.azurecr.io/eclipse/ubuntu_go recipes/ubuntu_go
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_go"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_go
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_go"
+
+### recipes/ubuntu_gradle/Dockerfile eclipse/ubuntu_gradle depends on eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
+  - job: "recipes__ubuntu_gradle__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__ubuntu_jdk8__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ubuntu_gradle
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_gradle eclipse/ubuntu_gradle
+        else
+          docker pull eclipse/ubuntu_gradle
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_gradle
+        fi
+        docker pull camino.azurecr.io/eclipse/ubuntu_jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
+        else
+          docker pull eclipse/ubuntu_jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_jdk8
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ubuntu_gradle/Dockerfile --cache-from eclipse/ubuntu_gradle -t camino.azurecr.io/eclipse/ubuntu_gradle recipes/ubuntu_gradle
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_gradle"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_gradle
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_gradle"
+
+### recipes/ubuntu_jdk8/Dockerfile eclipse/ubuntu_jdk8 depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__ubuntu_jdk8__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ubuntu_jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
+        else
+          docker pull eclipse/ubuntu_jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_jdk8
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ubuntu_jdk8/Dockerfile --cache-from eclipse/ubuntu_jdk8 -t camino.azurecr.io/eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_jdk8"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_jdk8
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_jdk8"
+
+### recipes/ubuntu_python/2.7/Dockerfile eclipse/ubuntu_python:2.7 depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__ubuntu_python__2__7__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ubuntu_python:2.7
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_python:2.7 eclipse/ubuntu_python:2.7
+        else
+          docker pull eclipse/ubuntu_python:2.7
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_python:2.7
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ubuntu_python/2.7/Dockerfile --cache-from eclipse/ubuntu_python:2.7 -t camino.azurecr.io/eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_python:2.7"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_python:2.7
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python:2.7"
+
+### recipes/ubuntu_python/Dockerfile eclipse/ubuntu_python depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__ubuntu_python__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ubuntu_python
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_python eclipse/ubuntu_python
+        else
+          docker pull eclipse/ubuntu_python
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_python
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ubuntu_python/Dockerfile --cache-from eclipse/ubuntu_python -t camino.azurecr.io/eclipse/ubuntu_python recipes/ubuntu_python
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_python"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_python
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python"
+
+### recipes/ubuntu_python/gae_python2.7/Dockerfile eclipse/ubuntu_python:gae_python2.7 depends on eclipse/stack-base:debian recipes/stack-base/debian
+  - job: "recipes__ubuntu_python__gae_python2__7__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__debian__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7 eclipse/ubuntu_python:gae_python2.7
+        else
+          docker pull eclipse/ubuntu_python:gae_python2.7
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_python:gae_python2.7
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
+        else
+          docker pull eclipse/stack-base:debian
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:debian
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ubuntu_python/gae_python2.7/Dockerfile --cache-from eclipse/ubuntu_python:gae_python2.7 -t camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7 recipes/ubuntu_python/gae_python2.7
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7"
+
+### recipes/ubuntu_python/gae_python3/Dockerfile eclipse/ubuntu_python:gae_python3 depends on eclipse/stack-base:debian recipes/stack-base/debian
+  - job: "recipes__ubuntu_python__gae_python3__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__debian__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ubuntu_python:gae_python3
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_python:gae_python3 eclipse/ubuntu_python:gae_python3
+        else
+          docker pull eclipse/ubuntu_python:gae_python3
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_python:gae_python3
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
+        else
+          docker pull eclipse/stack-base:debian
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:debian
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ubuntu_python/gae_python3/Dockerfile --cache-from eclipse/ubuntu_python:gae_python3 -t camino.azurecr.io/eclipse/ubuntu_python:gae_python3 recipes/ubuntu_python/gae_python3
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_python:gae_python3"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_python:gae_python3
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python:gae_python3"
+
+### recipes/ubuntu_rlang/Dockerfile eclipse/ubuntu_rlang depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__ubuntu_rlang__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ubuntu_rlang
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_rlang eclipse/ubuntu_rlang
+        else
+          docker pull eclipse/ubuntu_rlang
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_rlang
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ubuntu_rlang/Dockerfile --cache-from eclipse/ubuntu_rlang -t camino.azurecr.io/eclipse/ubuntu_rlang recipes/ubuntu_rlang
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_rlang"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_rlang
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_rlang"
+
+### recipes/ubuntu_wildfly8/Dockerfile eclipse/ubuntu_wildfly8 depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__ubuntu_wildfly8__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/ubuntu_wildfly8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_wildfly8 eclipse/ubuntu_wildfly8
+        else
+          docker pull eclipse/ubuntu_wildfly8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_wildfly8
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/ubuntu_wildfly8/Dockerfile --cache-from eclipse/ubuntu_wildfly8 -t camino.azurecr.io/eclipse/ubuntu_wildfly8 recipes/ubuntu_wildfly8
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_wildfly8"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_wildfly8
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_wildfly8"
+
+### recipes/x11_vnc/Dockerfile eclipse/x11_vnc depends on eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
+  - job: "recipes__x11_vnc__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__ubuntu_jdk8__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/x11_vnc
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/x11_vnc eclipse/x11_vnc
+        else
+          docker pull eclipse/x11_vnc
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/x11_vnc
+        fi
+        docker pull camino.azurecr.io/eclipse/ubuntu_jdk8
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
+        else
+          docker pull eclipse/ubuntu_jdk8
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/ubuntu_jdk8
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/x11_vnc/Dockerfile --cache-from eclipse/x11_vnc -t camino.azurecr.io/eclipse/x11_vnc recipes/x11_vnc
+      displayName: "Building camino.azurecr.io/eclipse/x11_vnc"
+    - script: docker push camino.azurecr.io/eclipse/x11_vnc
+      displayName: "Pushing camino.azurecr.io/eclipse/x11_vnc"
