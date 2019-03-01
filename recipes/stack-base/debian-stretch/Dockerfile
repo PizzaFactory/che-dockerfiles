@@ -46,7 +46,6 @@ RUN sudo localedef -i en_US -f UTF-8 en_US.UTF-8 && \
     svn --version && \
     sed -i 's/# store-passwords = no/store-passwords = yes/g' /home/user/.subversion/servers && \
     sed -i 's/# store-plaintext-passwords = no/store-plaintext-passwords = yes/g' /home/user/.subversion/servers
-COPY open-jdk-source-file-location /open-jdk-source-file-location
 EXPOSE 22 4403
 WORKDIR /projects
 
