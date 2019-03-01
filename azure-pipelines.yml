@@ -957,12 +957,12 @@ jobs:
     - script: docker push camino.azurecr.io/eclipse/node
       displayName: "Pushing camino.azurecr.io/eclipse/node"
 
-### recipes/php/5.6/Dockerfile eclipse/php:5.6 depends on eclipse/stack-base:debian recipes/stack-base/debian
+### recipes/php/5.6/Dockerfile eclipse/php:5.6 depends on eclipse/stack-base:debian-jessie recipes/stack-base/debian-jessie
   - job: "recipes__php__5__6__Dockerfile"
     timeoutInMinutes: 0
     pool:
       vmImage: 'Ubuntu 16.04'
-    dependsOn: "recipes__stack__base__debian__Dockerfile"
+    dependsOn: "recipes__stack__base__debian__jessie__Dockerfile"
     steps:
 
     - task: Docker@1
@@ -983,14 +983,14 @@ jobs:
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/php:5.6
         fi
-        docker pull camino.azurecr.io/eclipse/stack-base:debian
+        docker pull camino.azurecr.io/eclipse/stack-base:debian-jessie
         if [[ $? == 0 ]]; then
-          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
+          docker tag camino.azurecr.io/eclipse/stack-base:debian-jessie eclipse/stack-base:debian-jessie
         else
-          docker pull eclipse/stack-base:debian
+          docker pull eclipse/stack-base:debian-jessie
         fi
         if [[ $? != 0 ]]; then
-          docker tag scratch eclipse/stack-base:debian
+          docker tag scratch eclipse/stack-base:debian-jessie
         fi
         exit 0
       continueOnError: true
@@ -1000,50 +1000,6 @@ jobs:
       displayName: "Building camino.azurecr.io/eclipse/php:5.6"
     - script: docker push camino.azurecr.io/eclipse/php:5.6
       displayName: "Pushing camino.azurecr.io/eclipse/php:5.6"
-
-### recipes/php/Dockerfile eclipse/php depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
-  - job: "recipes__php__Dockerfile"
-    timeoutInMinutes: 0
-    pool:
-      vmImage: 'Ubuntu 16.04'
-    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
-    steps:
-
-    - task: Docker@1
-      displayName: 'Login to ACR.'
-      inputs:
-        command: login
-        dockerRegistryEndpoint: camino.azurecr.io
-        containerregistrytype: Container Registry
-
-    - script: |
-        set +e
-        docker pull camino.azurecr.io/eclipse/php
-        if [[ $? == 0 ]]; then
-          docker tag camino.azurecr.io/eclipse/php eclipse/php
-        else
-          docker pull eclipse/php
-        fi
-        if [[ $? != 0 ]]; then
-          docker tag scratch eclipse/php
-        fi
-        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
-        if [[ $? == 0 ]]; then
-          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
-        else
-          docker pull eclipse/stack-base:ubuntu
-        fi
-        if [[ $? != 0 ]]; then
-          docker tag scratch eclipse/stack-base:ubuntu
-        fi
-        exit 0
-      continueOnError: true
-      failOnStderr: false
-      displayName: "Pulling cache. (errors will be ignored)"
-    - script: docker build -f recipes/php/Dockerfile --cache-from eclipse/php -t camino.azurecr.io/eclipse/php recipes/php
-      displayName: "Building camino.azurecr.io/eclipse/php"
-    - script: docker push camino.azurecr.io/eclipse/php
-      displayName: "Pushing camino.azurecr.io/eclipse/php"
 
 ### recipes/php/gae/Dockerfile eclipse/php:gae depends on eclipse/php recipes/php
   - job: "recipes__php__gae__Dockerfile"
@@ -1132,6 +1088,50 @@ jobs:
       displayName: "Building camino.azurecr.io/eclipse/php:laravel"
     - script: docker push camino.azurecr.io/eclipse/php:laravel
       displayName: "Pushing camino.azurecr.io/eclipse/php:laravel"
+
+### recipes/php/Dockerfile eclipse/php depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__php__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/php
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/php eclipse/php
+        else
+          docker pull eclipse/php
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/php
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/php/Dockerfile --cache-from eclipse/php -t camino.azurecr.io/eclipse/php recipes/php
+      displayName: "Building camino.azurecr.io/eclipse/php"
+    - script: docker push camino.azurecr.io/eclipse/php
+      displayName: "Pushing camino.azurecr.io/eclipse/php"
 
 ### recipes/platformio/Dockerfile eclipse/platformio depends on eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
   - job: "recipes__platformio__Dockerfile"
@@ -1352,49 +1352,6 @@ jobs:
     - script: docker push camino.azurecr.io/eclipse/stack-base:centos
       displayName: "Pushing camino.azurecr.io/eclipse/stack-base:centos"
 
-### recipes/stack-base/debian/Dockerfile eclipse/stack-base:debian depends on debian:stretch debian/stretch
-  - job: "recipes__stack__base__debian__Dockerfile"
-    timeoutInMinutes: 0
-    pool:
-      vmImage: 'Ubuntu 16.04'
-    steps:
-
-    - task: Docker@1
-      displayName: 'Login to ACR.'
-      inputs:
-        command: login
-        dockerRegistryEndpoint: camino.azurecr.io
-        containerregistrytype: Container Registry
-
-    - script: |
-        set +e
-        docker pull camino.azurecr.io/eclipse/stack-base:debian
-        if [[ $? == 0 ]]; then
-          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
-        else
-          docker pull eclipse/stack-base:debian
-        fi
-        if [[ $? != 0 ]]; then
-          docker tag scratch eclipse/stack-base:debian
-        fi
-        docker pull camino.azurecr.io/debian:stretch
-        if [[ $? == 0 ]]; then
-          docker tag camino.azurecr.io/debian:stretch debian:stretch
-        else
-          docker pull debian:stretch
-        fi
-        if [[ $? != 0 ]]; then
-          docker tag scratch debian:stretch
-        fi
-        exit 0
-      continueOnError: true
-      failOnStderr: false
-      displayName: "Pulling cache. (errors will be ignored)"
-    - script: docker build -f recipes/stack-base/debian/Dockerfile --cache-from eclipse/stack-base:debian -t camino.azurecr.io/eclipse/stack-base:debian recipes/stack-base/debian
-      displayName: "Building camino.azurecr.io/eclipse/stack-base:debian"
-    - script: docker push camino.azurecr.io/eclipse/stack-base:debian
-      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian"
-
 ### recipes/stack-base/ubuntu/Dockerfile eclipse/stack-base:ubuntu depends on ubuntu:16.04 ubuntu/16.04
   - job: "recipes__stack__base__ubuntu__Dockerfile"
     timeoutInMinutes: 0
@@ -1437,6 +1394,92 @@ jobs:
       displayName: "Building camino.azurecr.io/eclipse/stack-base:ubuntu"
     - script: docker push camino.azurecr.io/eclipse/stack-base:ubuntu
       displayName: "Pushing camino.azurecr.io/eclipse/stack-base:ubuntu"
+
+### recipes/stack-base/debian-jessie/Dockerfile eclipse/stack-base:debian-jessie depends on debian:jessie debian/jessie
+  - job: "recipes__stack__base__debian__jessie__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/stack-base:debian-jessie
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:debian-jessie eclipse/stack-base:debian-jessie
+        else
+          docker pull eclipse/stack-base:debian-jessie
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:debian-jessie
+        fi
+        docker pull camino.azurecr.io/debian:jessie
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/debian:jessie debian:jessie
+        else
+          docker pull debian:jessie
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch debian:jessie
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/stack-base/debian-jessie/Dockerfile --cache-from eclipse/stack-base:debian-jessie -t camino.azurecr.io/eclipse/stack-base:debian-jessie recipes/stack-base/debian-jessie
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:debian-jessie"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:debian-jessie
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian-jessie"
+
+### recipes/stack-base/debian-stretch/Dockerfile eclipse/stack-base:debian-stretch depends on debian:stretch debian/stretch
+  - job: "recipes__stack__base__debian__stretch__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/stack-base:debian-stretch
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:debian-stretch eclipse/stack-base:debian-stretch
+        else
+          docker pull eclipse/stack-base:debian-stretch
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:debian-stretch
+        fi
+        docker pull camino.azurecr.io/debian:stretch
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/debian:stretch debian:stretch
+        else
+          docker pull debian:stretch
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch debian:stretch
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/stack-base/debian-stretch/Dockerfile --cache-from eclipse/stack-base:debian-stretch -t camino.azurecr.io/eclipse/stack-base:debian-stretch recipes/stack-base/debian-stretch
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:debian-stretch"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:debian-stretch
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian-stretch"
 
 ### recipes/ubuntu_go/Dockerfile eclipse/ubuntu_go depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__ubuntu_go__Dockerfile"
