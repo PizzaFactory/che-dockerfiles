@@ -8,7 +8,7 @@ jobs:
 
 __HEADER
 
-for dockerfile in $(find recipes -name 'Dockerfile'); do
+for dockerfile in $(find recipes -follow -name 'Dockerfile'); do
     a=${dockerfile%/Dockerfile}
     b=${a#recipes/}
     tag="${ORGANIZATION}/${b/\//:}"

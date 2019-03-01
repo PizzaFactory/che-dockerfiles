@@ -1481,6 +1481,49 @@ jobs:
     - script: docker push camino.azurecr.io/eclipse/stack-base:debian-stretch
       displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian-stretch"
 
+### recipes/stack-base/debian/Dockerfile eclipse/stack-base:debian depends on debian:stretch debian/stretch
+  - job: "recipes__stack__base__debian__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
+        else
+          docker pull eclipse/stack-base:debian
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:debian
+        fi
+        docker pull camino.azurecr.io/debian:stretch
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/debian:stretch debian:stretch
+        else
+          docker pull debian:stretch
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch debian:stretch
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/stack-base/debian/Dockerfile --cache-from eclipse/stack-base:debian -t camino.azurecr.io/eclipse/stack-base:debian recipes/stack-base/debian
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:debian"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:debian
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian"
+
 ### recipes/ubuntu_go/Dockerfile eclipse/ubuntu_go depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__ubuntu_go__Dockerfile"
     timeoutInMinutes: 0
