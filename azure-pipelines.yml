@@ -43,6 +43,7 @@ jobs:
     - script: docker build -f recipes/kotlin/Dockerfile --cache-from eclipse/kotlin -t camino.azurecr.io/eclipse/kotlin recipes/kotlin
       displayName: "Building camino.azurecr.io/eclipse/kotlin"
     - script: docker push camino.azurecr.io/eclipse/kotlin
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/kotlin"
 
 ### recipes/meteor/Dockerfile eclipse/meteor depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -87,6 +88,7 @@ jobs:
     - script: docker build -f recipes/meteor/Dockerfile --cache-from eclipse/meteor -t camino.azurecr.io/eclipse/meteor recipes/meteor
       displayName: "Building camino.azurecr.io/eclipse/meteor"
     - script: docker push camino.azurecr.io/eclipse/meteor
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/meteor"
 
 ### recipes/centos_spring_boot/Dockerfile eclipse/centos_spring_boot depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
@@ -130,6 +132,7 @@ jobs:
     - script: docker build -f recipes/centos_spring_boot/Dockerfile --cache-from eclipse/centos_spring_boot -t camino.azurecr.io/eclipse/centos_spring_boot recipes/centos_spring_boot
       displayName: "Building camino.azurecr.io/eclipse/centos_spring_boot"
     - script: docker push camino.azurecr.io/eclipse/centos_spring_boot
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_spring_boot"
 
 ### recipes/debian_jdk8/Dockerfile eclipse/debian_jdk8 depends on eclipse/stack-base:debian recipes/stack-base/debian
@@ -174,6 +177,7 @@ jobs:
     - script: docker build -f recipes/debian_jdk8/Dockerfile --cache-from eclipse/debian_jdk8 -t camino.azurecr.io/eclipse/debian_jdk8 recipes/debian_jdk8
       displayName: "Building camino.azurecr.io/eclipse/debian_jdk8"
     - script: docker push camino.azurecr.io/eclipse/debian_jdk8
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/debian_jdk8"
 
 ### recipes/ubuntu_jdk8/Dockerfile eclipse/ubuntu_jdk8 depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -218,6 +222,7 @@ jobs:
     - script: docker build -f recipes/ubuntu_jdk8/Dockerfile --cache-from eclipse/ubuntu_jdk8 -t camino.azurecr.io/eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
       displayName: "Building camino.azurecr.io/eclipse/ubuntu_jdk8"
     - script: docker push camino.azurecr.io/eclipse/ubuntu_jdk8
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_jdk8"
 
 ### recipes/ubuntu_wildfly8/Dockerfile eclipse/ubuntu_wildfly8 depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -262,6 +267,7 @@ jobs:
     - script: docker build -f recipes/ubuntu_wildfly8/Dockerfile --cache-from eclipse/ubuntu_wildfly8 -t camino.azurecr.io/eclipse/ubuntu_wildfly8 recipes/ubuntu_wildfly8
       displayName: "Building camino.azurecr.io/eclipse/ubuntu_wildfly8"
     - script: docker push camino.azurecr.io/eclipse/ubuntu_wildfly8
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_wildfly8"
 
 ### recipes/alpine_jdk8/Dockerfile eclipse/alpine_jdk8 depends on openjdk:8u111-jre-alpine openjdk/8u111-jre-alpine
@@ -305,6 +311,7 @@ jobs:
     - script: docker build -f recipes/alpine_jdk8/Dockerfile --cache-from eclipse/alpine_jdk8 -t camino.azurecr.io/eclipse/alpine_jdk8 recipes/alpine_jdk8
       displayName: "Building camino.azurecr.io/eclipse/alpine_jdk8"
     - script: docker push camino.azurecr.io/eclipse/alpine_jdk8
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/alpine_jdk8"
 
 ### recipes/selenium/Dockerfile eclipse/selenium depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -349,6 +356,7 @@ jobs:
     - script: docker build -f recipes/selenium/Dockerfile --cache-from eclipse/selenium -t camino.azurecr.io/eclipse/selenium recipes/selenium
       displayName: "Building camino.azurecr.io/eclipse/selenium"
     - script: docker push camino.azurecr.io/eclipse/selenium
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/selenium"
 
 ### recipes/ubuntu_go/Dockerfile eclipse/ubuntu_go depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -393,6 +401,7 @@ jobs:
     - script: docker build -f recipes/ubuntu_go/Dockerfile --cache-from eclipse/ubuntu_go -t camino.azurecr.io/eclipse/ubuntu_go recipes/ubuntu_go
       displayName: "Building camino.azurecr.io/eclipse/ubuntu_go"
     - script: docker push camino.azurecr.io/eclipse/ubuntu_go
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_go"
 
 ### recipes/x11_vnc/Dockerfile eclipse/x11_vnc depends on eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
@@ -437,6 +446,7 @@ jobs:
     - script: docker build -f recipes/x11_vnc/Dockerfile --cache-from eclipse/x11_vnc -t camino.azurecr.io/eclipse/x11_vnc recipes/x11_vnc
       displayName: "Building camino.azurecr.io/eclipse/x11_vnc"
     - script: docker push camino.azurecr.io/eclipse/x11_vnc
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/x11_vnc"
 
 ### recipes/centos_wildfly_swarm/Dockerfile eclipse/centos_wildfly_swarm depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
@@ -480,6 +490,7 @@ jobs:
     - script: docker build -f recipes/centos_wildfly_swarm/Dockerfile --cache-from eclipse/centos_wildfly_swarm -t camino.azurecr.io/eclipse/centos_wildfly_swarm recipes/centos_wildfly_swarm
       displayName: "Building camino.azurecr.io/eclipse/centos_wildfly_swarm"
     - script: docker push camino.azurecr.io/eclipse/centos_wildfly_swarm
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_wildfly_swarm"
 
 ### recipes/centos_jdk8/Dockerfile eclipse/centos_jdk8 depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
@@ -523,6 +534,7 @@ jobs:
     - script: docker build -f recipes/centos_jdk8/Dockerfile --cache-from eclipse/centos_jdk8 -t camino.azurecr.io/eclipse/centos_jdk8 recipes/centos_jdk8
       displayName: "Building camino.azurecr.io/eclipse/centos_jdk8"
     - script: docker push camino.azurecr.io/eclipse/centos_jdk8
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_jdk8"
 
 ### recipes/angular/Dockerfile eclipse/angular depends on eclipse/node recipes/node
@@ -567,6 +579,7 @@ jobs:
     - script: docker build -f recipes/angular/Dockerfile --cache-from eclipse/angular -t camino.azurecr.io/eclipse/angular recipes/angular
       displayName: "Building camino.azurecr.io/eclipse/angular"
     - script: docker push camino.azurecr.io/eclipse/angular
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/angular"
 
 ### recipes/cpp_gcc/Dockerfile eclipse/cpp_gcc depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -611,7 +624,98 @@ jobs:
     - script: docker build -f recipes/cpp_gcc/Dockerfile --cache-from eclipse/cpp_gcc -t camino.azurecr.io/eclipse/cpp_gcc recipes/cpp_gcc
       displayName: "Building camino.azurecr.io/eclipse/cpp_gcc"
     - script: docker push camino.azurecr.io/eclipse/cpp_gcc
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/cpp_gcc"
+
+### recipes/cpp_gcc/ubuntu-trusty/Dockerfile eclipse/cpp_gcc:ubuntu-trusty depends on eclipse/stack-base:ubuntu-trusty recipes/stack-base/ubuntu-trusty
+  - job: "recipes__cpp_gcc__ubuntu__trusty__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__trusty__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/cpp_gcc:ubuntu-trusty
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/cpp_gcc:ubuntu-trusty eclipse/cpp_gcc:ubuntu-trusty
+        else
+          docker pull eclipse/cpp_gcc:ubuntu-trusty
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/cpp_gcc:ubuntu-trusty
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu-trusty
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu-trusty eclipse/stack-base:ubuntu-trusty
+        else
+          docker pull eclipse/stack-base:ubuntu-trusty
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu-trusty
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/cpp_gcc/ubuntu-trusty/Dockerfile --cache-from eclipse/cpp_gcc:ubuntu-trusty -t camino.azurecr.io/eclipse/cpp_gcc:ubuntu-trusty recipes/cpp_gcc/ubuntu-trusty
+      displayName: "Building camino.azurecr.io/eclipse/cpp_gcc:ubuntu-trusty"
+    - script: docker push camino.azurecr.io/eclipse/cpp_gcc:ubuntu-trusty
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
+      displayName: "Pushing camino.azurecr.io/eclipse/cpp_gcc:ubuntu-trusty"
+
+### recipes/cpp_gcc/ubuntu/Dockerfile eclipse/cpp_gcc:ubuntu depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+  - job: "recipes__cpp_gcc__ubuntu__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    dependsOn: "recipes__stack__base__ubuntu__Dockerfile"
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/cpp_gcc:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/cpp_gcc:ubuntu eclipse/cpp_gcc:ubuntu
+        else
+          docker pull eclipse/cpp_gcc:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/cpp_gcc:ubuntu
+        fi
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+        else
+          docker pull eclipse/stack-base:ubuntu
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/cpp_gcc/ubuntu/Dockerfile --cache-from eclipse/cpp_gcc:ubuntu -t camino.azurecr.io/eclipse/cpp_gcc:ubuntu recipes/cpp_gcc/ubuntu
+      displayName: "Building camino.azurecr.io/eclipse/cpp_gcc:ubuntu"
+    - script: docker push camino.azurecr.io/eclipse/cpp_gcc:ubuntu
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
+      displayName: "Pushing camino.azurecr.io/eclipse/cpp_gcc:ubuntu"
 
 ### recipes/android/Dockerfile eclipse/android depends on eclipse/stack-base:centos recipes/stack-base/centos
   - job: "recipes__android__Dockerfile"
@@ -655,6 +759,7 @@ jobs:
     - script: docker build -f recipes/android/Dockerfile --cache-from eclipse/android -t camino.azurecr.io/eclipse/android recipes/android
       displayName: "Building camino.azurecr.io/eclipse/android"
     - script: docker push camino.azurecr.io/eclipse/android
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/android"
 
 ### recipes/centos_nodejs/Dockerfile eclipse/centos_nodejs depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
@@ -698,6 +803,7 @@ jobs:
     - script: docker build -f recipes/centos_nodejs/Dockerfile --cache-from eclipse/centos_nodejs -t camino.azurecr.io/eclipse/centos_nodejs recipes/centos_nodejs
       displayName: "Building camino.azurecr.io/eclipse/centos_nodejs"
     - script: docker push camino.azurecr.io/eclipse/centos_nodejs
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_nodejs"
 
 ### recipes/hugo/debian/Dockerfile eclipse/hugo:debian depends on eclipse/stack-base:debian recipes/stack-base/debian
@@ -742,6 +848,7 @@ jobs:
     - script: docker build -f recipes/hugo/debian/Dockerfile --cache-from eclipse/hugo:debian -t camino.azurecr.io/eclipse/hugo:debian recipes/hugo/debian
       displayName: "Building camino.azurecr.io/eclipse/hugo:debian"
     - script: docker push camino.azurecr.io/eclipse/hugo:debian
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/hugo:debian"
 
 ### recipes/hugo/0.54.0-ubuntu/Dockerfile eclipse/hugo:0.54.0-ubuntu depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -786,6 +893,7 @@ jobs:
     - script: docker build -f recipes/hugo/0.54.0-ubuntu/Dockerfile --cache-from eclipse/hugo:0.54.0-ubuntu -t camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu recipes/hugo/0.54.0-ubuntu
       displayName: "Building camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu"
     - script: docker push camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu"
 
 ### recipes/hugo/0.54.0-debian/Dockerfile eclipse/hugo:0.54.0-debian depends on eclipse/stack-base:debian recipes/stack-base/debian
@@ -830,6 +938,7 @@ jobs:
     - script: docker build -f recipes/hugo/0.54.0-debian/Dockerfile --cache-from eclipse/hugo:0.54.0-debian -t camino.azurecr.io/eclipse/hugo:0.54.0-debian recipes/hugo/0.54.0-debian
       displayName: "Building camino.azurecr.io/eclipse/hugo:0.54.0-debian"
     - script: docker push camino.azurecr.io/eclipse/hugo:0.54.0-debian
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/hugo:0.54.0-debian"
 
 ### recipes/hugo/ubuntu/Dockerfile eclipse/hugo:ubuntu depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -874,6 +983,7 @@ jobs:
     - script: docker build -f recipes/hugo/ubuntu/Dockerfile --cache-from eclipse/hugo:ubuntu -t camino.azurecr.io/eclipse/hugo:ubuntu recipes/hugo/ubuntu
       displayName: "Building camino.azurecr.io/eclipse/hugo:ubuntu"
     - script: docker push camino.azurecr.io/eclipse/hugo:ubuntu
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/hugo:ubuntu"
 
 ### recipes/platformio/Dockerfile eclipse/platformio depends on eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
@@ -918,6 +1028,7 @@ jobs:
     - script: docker build -f recipes/platformio/Dockerfile --cache-from eclipse/platformio -t camino.azurecr.io/eclipse/platformio recipes/platformio
       displayName: "Building camino.azurecr.io/eclipse/platformio"
     - script: docker push camino.azurecr.io/eclipse/platformio
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/platformio"
 
 ### recipes/dotnet_core/Dockerfile eclipse/dotnet_core depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -962,6 +1073,7 @@ jobs:
     - script: docker build -f recipes/dotnet_core/Dockerfile --cache-from eclipse/dotnet_core -t camino.azurecr.io/eclipse/dotnet_core recipes/dotnet_core
       displayName: "Building camino.azurecr.io/eclipse/dotnet_core"
     - script: docker push camino.azurecr.io/eclipse/dotnet_core
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/dotnet_core"
 
 ### recipes/ubuntu_gradle/Dockerfile eclipse/ubuntu_gradle depends on eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
@@ -1006,6 +1118,7 @@ jobs:
     - script: docker build -f recipes/ubuntu_gradle/Dockerfile --cache-from eclipse/ubuntu_gradle -t camino.azurecr.io/eclipse/ubuntu_gradle recipes/ubuntu_gradle
       displayName: "Building camino.azurecr.io/eclipse/ubuntu_gradle"
     - script: docker push camino.azurecr.io/eclipse/ubuntu_gradle
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_gradle"
 
 ### recipes/centos_vertx/Dockerfile eclipse/centos_vertx depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
@@ -1049,6 +1162,7 @@ jobs:
     - script: docker build -f recipes/centos_vertx/Dockerfile --cache-from eclipse/centos_vertx -t camino.azurecr.io/eclipse/centos_vertx recipes/centos_vertx
       displayName: "Building camino.azurecr.io/eclipse/centos_vertx"
     - script: docker push camino.azurecr.io/eclipse/centos_vertx
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_vertx"
 
 ### recipes/mysql/Dockerfile eclipse/mysql depends on mysql:5.7 mysql/5.7
@@ -1092,6 +1206,7 @@ jobs:
     - script: docker build -f recipes/mysql/Dockerfile --cache-from eclipse/mysql -t camino.azurecr.io/eclipse/mysql recipes/mysql
       displayName: "Building camino.azurecr.io/eclipse/mysql"
     - script: docker push camino.azurecr.io/eclipse/mysql
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/mysql"
 
 ### recipes/ubuntu_python/2.7/Dockerfile eclipse/ubuntu_python:2.7 depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -1136,6 +1251,7 @@ jobs:
     - script: docker build -f recipes/ubuntu_python/2.7/Dockerfile --cache-from eclipse/ubuntu_python:2.7 -t camino.azurecr.io/eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
       displayName: "Building camino.azurecr.io/eclipse/ubuntu_python:2.7"
     - script: docker push camino.azurecr.io/eclipse/ubuntu_python:2.7
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python:2.7"
 
 ### recipes/ubuntu_python/gae_python2.7/Dockerfile eclipse/ubuntu_python:gae_python2.7 depends on eclipse/stack-base:debian recipes/stack-base/debian
@@ -1180,6 +1296,7 @@ jobs:
     - script: docker build -f recipes/ubuntu_python/gae_python2.7/Dockerfile --cache-from eclipse/ubuntu_python:gae_python2.7 -t camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7 recipes/ubuntu_python/gae_python2.7
       displayName: "Building camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7"
     - script: docker push camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7"
 
 ### recipes/ubuntu_python/Dockerfile eclipse/ubuntu_python depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -1224,6 +1341,7 @@ jobs:
     - script: docker build -f recipes/ubuntu_python/Dockerfile --cache-from eclipse/ubuntu_python -t camino.azurecr.io/eclipse/ubuntu_python recipes/ubuntu_python
       displayName: "Building camino.azurecr.io/eclipse/ubuntu_python"
     - script: docker push camino.azurecr.io/eclipse/ubuntu_python
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python"
 
 ### recipes/ubuntu_python/gae_python3/Dockerfile eclipse/ubuntu_python:gae_python3 depends on eclipse/stack-base:debian recipes/stack-base/debian
@@ -1268,6 +1386,7 @@ jobs:
     - script: docker build -f recipes/ubuntu_python/gae_python3/Dockerfile --cache-from eclipse/ubuntu_python:gae_python3 -t camino.azurecr.io/eclipse/ubuntu_python:gae_python3 recipes/ubuntu_python/gae_python3
       displayName: "Building camino.azurecr.io/eclipse/ubuntu_python:gae_python3"
     - script: docker push camino.azurecr.io/eclipse/ubuntu_python:gae_python3
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python:gae_python3"
 
 ### recipes/node/Dockerfile eclipse/node depends on eclipse/stack-base:debian recipes/stack-base/debian
@@ -1312,6 +1431,7 @@ jobs:
     - script: docker build -f recipes/node/Dockerfile --cache-from eclipse/node -t camino.azurecr.io/eclipse/node recipes/node
       displayName: "Building camino.azurecr.io/eclipse/node"
     - script: docker push camino.azurecr.io/eclipse/node
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/node"
 
 ### recipes/centos_go/Dockerfile eclipse/centos_go depends on registry.centos.org/che-stacks/centos-nodejs registry.centos.org/che-stacks/centos-nodejs
@@ -1355,6 +1475,7 @@ jobs:
     - script: docker build -f recipes/centos_go/Dockerfile --cache-from eclipse/centos_go -t camino.azurecr.io/eclipse/centos_go recipes/centos_go
       displayName: "Building camino.azurecr.io/eclipse/centos_go"
     - script: docker push camino.azurecr.io/eclipse/centos_go
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_go"
 
 ### recipes/centos_ceylon_nodejs_dart/Dockerfile eclipse/centos_ceylon_nodejs_dart depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
@@ -1398,6 +1519,7 @@ jobs:
     - script: docker build -f recipes/centos_ceylon_nodejs_dart/Dockerfile --cache-from eclipse/centos_ceylon_nodejs_dart -t camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart recipes/centos_ceylon_nodejs_dart
       displayName: "Building camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart"
     - script: docker push camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart"
 
 ### recipes/ubuntu_rlang/Dockerfile eclipse/ubuntu_rlang depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -1442,6 +1564,7 @@ jobs:
     - script: docker build -f recipes/ubuntu_rlang/Dockerfile --cache-from eclipse/ubuntu_rlang -t camino.azurecr.io/eclipse/ubuntu_rlang recipes/ubuntu_rlang
       displayName: "Building camino.azurecr.io/eclipse/ubuntu_rlang"
     - script: docker push camino.azurecr.io/eclipse/ubuntu_rlang
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_rlang"
 
 ### recipes/php/5.6/Dockerfile eclipse/php:5.6 depends on eclipse/stack-base:debian-jessie recipes/stack-base/debian-jessie
@@ -1486,6 +1609,7 @@ jobs:
     - script: docker build -f recipes/php/5.6/Dockerfile --cache-from eclipse/php:5.6 -t camino.azurecr.io/eclipse/php:5.6 recipes/php/5.6
       displayName: "Building camino.azurecr.io/eclipse/php:5.6"
     - script: docker push camino.azurecr.io/eclipse/php:5.6
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/php:5.6"
 
 ### recipes/php/laravel/Dockerfile eclipse/php:laravel depends on eclipse/php recipes/php
@@ -1530,6 +1654,7 @@ jobs:
     - script: docker build -f recipes/php/laravel/Dockerfile --cache-from eclipse/php:laravel -t camino.azurecr.io/eclipse/php:laravel recipes/php/laravel
       displayName: "Building camino.azurecr.io/eclipse/php:laravel"
     - script: docker push camino.azurecr.io/eclipse/php:laravel
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/php:laravel"
 
 ### recipes/php/gae/Dockerfile eclipse/php:gae depends on eclipse/php recipes/php
@@ -1574,6 +1699,7 @@ jobs:
     - script: docker build -f recipes/php/gae/Dockerfile --cache-from eclipse/php:gae -t camino.azurecr.io/eclipse/php:gae recipes/php/gae
       displayName: "Building camino.azurecr.io/eclipse/php:gae"
     - script: docker push camino.azurecr.io/eclipse/php:gae
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/php:gae"
 
 ### recipes/php/Dockerfile eclipse/php depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -1618,6 +1744,7 @@ jobs:
     - script: docker build -f recipes/php/Dockerfile --cache-from eclipse/php -t camino.azurecr.io/eclipse/php recipes/php
       displayName: "Building camino.azurecr.io/eclipse/php"
     - script: docker push camino.azurecr.io/eclipse/php
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/php"
 
 ### recipes/debian_jdk8_node/Dockerfile eclipse/debian_jdk8_node depends on eclipse/debian_jdk8 recipes/debian_jdk8
@@ -1662,6 +1789,7 @@ jobs:
     - script: docker build -f recipes/debian_jdk8_node/Dockerfile --cache-from eclipse/debian_jdk8_node -t camino.azurecr.io/eclipse/debian_jdk8_node recipes/debian_jdk8_node
       displayName: "Building camino.azurecr.io/eclipse/debian_jdk8_node"
     - script: docker push camino.azurecr.io/eclipse/debian_jdk8_node
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/debian_jdk8_node"
 
 ### recipes/hadoop-dev/Dockerfile eclipse/hadoop-dev depends on eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
@@ -1706,6 +1834,7 @@ jobs:
     - script: docker build -f recipes/hadoop-dev/Dockerfile --cache-from eclipse/hadoop-dev -t camino.azurecr.io/eclipse/hadoop-dev recipes/hadoop-dev
       displayName: "Building camino.azurecr.io/eclipse/hadoop-dev"
     - script: docker push camino.azurecr.io/eclipse/hadoop-dev
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/hadoop-dev"
 
 ### recipes/centos_dotnet20/Dockerfile eclipse/centos_dotnet20 depends on registry.centos.org/che-stacks/centos-stack-base:latest registry.centos.org/che-stacks/centos-stack-base/latest
@@ -1749,6 +1878,7 @@ jobs:
     - script: docker build -f recipes/centos_dotnet20/Dockerfile --cache-from eclipse/centos_dotnet20 -t camino.azurecr.io/eclipse/centos_dotnet20 recipes/centos_dotnet20
       displayName: "Building camino.azurecr.io/eclipse/centos_dotnet20"
     - script: docker push camino.azurecr.io/eclipse/centos_dotnet20
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_dotnet20"
 
 ### recipes/centos_python/2/Dockerfile eclipse/centos_python:2 depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
@@ -1792,6 +1922,7 @@ jobs:
     - script: docker build -f recipes/centos_python/2/Dockerfile --cache-from eclipse/centos_python:2 -t camino.azurecr.io/eclipse/centos_python:2 recipes/centos_python/2
       displayName: "Building camino.azurecr.io/eclipse/centos_python:2"
     - script: docker push camino.azurecr.io/eclipse/centos_python:2
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_python:2"
 
 ### recipes/centos_python/3/Dockerfile eclipse/centos_python:3 depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
@@ -1835,6 +1966,7 @@ jobs:
     - script: docker build -f recipes/centos_python/3/Dockerfile --cache-from eclipse/centos_python:3 -t camino.azurecr.io/eclipse/centos_python:3 recipes/centos_python/3
       displayName: "Building camino.azurecr.io/eclipse/centos_python:3"
     - script: docker push camino.azurecr.io/eclipse/centos_python:3
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/centos_python:3"
 
 ### recipes/stack-base/centos/Dockerfile eclipse/stack-base:centos depends on registry.centos.org/centos/centos registry.centos.org/centos/centos
@@ -1878,6 +2010,7 @@ jobs:
     - script: docker build -f recipes/stack-base/centos/Dockerfile --cache-from eclipse/stack-base:centos -t camino.azurecr.io/eclipse/stack-base:centos recipes/stack-base/centos
       displayName: "Building camino.azurecr.io/eclipse/stack-base:centos"
     - script: docker push camino.azurecr.io/eclipse/stack-base:centos
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/stack-base:centos"
 
 ### recipes/stack-base/debian/Dockerfile eclipse/stack-base:debian depends on debian:stretch debian/stretch
@@ -1921,6 +2054,7 @@ jobs:
     - script: docker build -f recipes/stack-base/debian/Dockerfile --cache-from eclipse/stack-base:debian -t camino.azurecr.io/eclipse/stack-base:debian recipes/stack-base/debian
       displayName: "Building camino.azurecr.io/eclipse/stack-base:debian"
     - script: docker push camino.azurecr.io/eclipse/stack-base:debian
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian"
 
 ### recipes/stack-base/debian-jessie/Dockerfile eclipse/stack-base:debian-jessie depends on debian:jessie-backports debian/jessie-backports
@@ -1964,6 +2098,7 @@ jobs:
     - script: docker build -f recipes/stack-base/debian-jessie/Dockerfile --cache-from eclipse/stack-base:debian-jessie -t camino.azurecr.io/eclipse/stack-base:debian-jessie recipes/stack-base/debian-jessie
       displayName: "Building camino.azurecr.io/eclipse/stack-base:debian-jessie"
     - script: docker push camino.azurecr.io/eclipse/stack-base:debian-jessie
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian-jessie"
 
 ### recipes/stack-base/ubuntu-trusty/Dockerfile eclipse/stack-base:ubuntu-trusty depends on ubuntu:14.04 ubuntu/14.04
@@ -2007,6 +2142,7 @@ jobs:
     - script: docker build -f recipes/stack-base/ubuntu-trusty/Dockerfile --cache-from eclipse/stack-base:ubuntu-trusty -t camino.azurecr.io/eclipse/stack-base:ubuntu-trusty recipes/stack-base/ubuntu-trusty
       displayName: "Building camino.azurecr.io/eclipse/stack-base:ubuntu-trusty"
     - script: docker push camino.azurecr.io/eclipse/stack-base:ubuntu-trusty
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/stack-base:ubuntu-trusty"
 
 ### recipes/stack-base/ubuntu/Dockerfile eclipse/stack-base:ubuntu depends on ubuntu:16.04 ubuntu/16.04
@@ -2050,6 +2186,7 @@ jobs:
     - script: docker build -f recipes/stack-base/ubuntu/Dockerfile --cache-from eclipse/stack-base:ubuntu -t camino.azurecr.io/eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
       displayName: "Building camino.azurecr.io/eclipse/stack-base:ubuntu"
     - script: docker push camino.azurecr.io/eclipse/stack-base:ubuntu
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/stack-base:ubuntu"
 
 ### recipes/stack-base/debian-stretch/Dockerfile eclipse/stack-base:debian-stretch depends on debian:stretch debian/stretch
@@ -2093,6 +2230,7 @@ jobs:
     - script: docker build -f recipes/stack-base/debian-stretch/Dockerfile --cache-from eclipse/stack-base:debian-stretch -t camino.azurecr.io/eclipse/stack-base:debian-stretch recipes/stack-base/debian-stretch
       displayName: "Building camino.azurecr.io/eclipse/stack-base:debian-stretch"
     - script: docker push camino.azurecr.io/eclipse/stack-base:debian-stretch
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian-stretch"
 
 ### recipes/ruby_rails/Dockerfile eclipse/ruby_rails depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
@@ -2137,6 +2275,7 @@ jobs:
     - script: docker build -f recipes/ruby_rails/Dockerfile --cache-from eclipse/ruby_rails -t camino.azurecr.io/eclipse/ruby_rails recipes/ruby_rails
       displayName: "Building camino.azurecr.io/eclipse/ruby_rails"
     - script: docker push camino.azurecr.io/eclipse/ruby_rails
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/ruby_rails"
 
 ### recipes/sails/Dockerfile eclipse/sails depends on eclipse/node recipes/node
@@ -2181,4 +2320,5 @@ jobs:
     - script: docker build -f recipes/sails/Dockerfile --cache-from eclipse/sails -t camino.azurecr.io/eclipse/sails recipes/sails
       displayName: "Building camino.azurecr.io/eclipse/sails"
     - script: docker push camino.azurecr.io/eclipse/sails
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing camino.azurecr.io/eclipse/sails"

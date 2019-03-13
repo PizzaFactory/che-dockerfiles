@@ -74,6 +74,7 @@ cat <<__BODY
     - script: docker build -f $dockerfile --cache-from $tag -t $pushtag ${dockerfile%/*}
       displayName: "Building $pushtag"
     - script: docker push $pushtag
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing $pushtag"
 __BODY
 done
