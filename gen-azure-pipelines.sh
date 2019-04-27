@@ -4,6 +4,13 @@ PRIVATE_REPO=${PRIVATE_REPO:-}
 ORGANIZATION=eclipse
 
 cat <<__HEADER
+# This file was auto-generated.
+
+trigger:
+  branches:
+   include:
+     - azure-pipelines
+
 jobs:
 
 __HEADER
@@ -12,6 +19,7 @@ for dockerfile in $(find recipes -follow -name 'Dockerfile'); do
     a=${dockerfile%/Dockerfile}
     b=${a#recipes/}
     tag="${ORGANIZATION}/${b/\//:}"
+    from_all=$(sed -ne 's/FROM[ \t]\{1,\}\([^ \t]\{1,\}\)[ \t]\{1,\}as.*/\1/p' $dockerfile)
     from_a=$(sed -ne 's/^FROM *\(.*\)/\1/p' $dockerfile | tail -1)
     from=${from_a///}
     from_path_a=${from//:/\/}
@@ -37,7 +45,7 @@ else
   pushtag=$tag
   fromtag=$from
 fi
-cat <<__BODY
+cat <<__HEAD
     steps:
 
     - task: Docker@1
@@ -49,6 +57,21 @@ cat <<__BODY
 
     - script: |
         set +e
+__HEAD
+for i in $from_all; do
+if [[ $PRIVATE_REPO != "" ]]; then
+  partial_from=$PRIVATE_REPO/$i
+else
+  partial_from=$i
+fi
+cat <<__PARTIAL
+        docker pull $partial_from
+        if [[ \$? == 0 ]]; then
+          docker tag $partial_from $i
+        fi
+__PARTIAL
+done
+cat <<__BODY
         docker pull $pushtag
         if [[ \$? == 0 ]]; then
           docker tag $pushtag $tag
@@ -74,7 +97,7 @@ cat <<__BODY
     - script: docker build -f $dockerfile --cache-from $tag -t $pushtag ${dockerfile%/*}
       displayName: "Building $pushtag"
     - script: docker push $pushtag
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/azure-pipelines'))
       displayName: "Pushing $pushtag"
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 __BODY
 done
