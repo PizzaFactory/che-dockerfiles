@@ -366,6 +366,50 @@ jobs:
       displayName: "Pushing camino.azurecr.io/eclipse/node"
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
+### recipes/stack-base/ubuntu-xenial/Dockerfile eclipse/stack-base:ubuntu-xenial depends on ubuntu:16.04 ubuntu/16.04
+  - job: "recipes__stack__base__ubuntu__xenial__Dockerfile"
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+
+    - task: Docker@1
+      displayName: 'Login to ACR.'
+      inputs:
+        command: login
+        dockerRegistryEndpoint: camino.azurecr.io
+        containerregistrytype: Container Registry
+
+    - script: |
+        set +e
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu-xenial
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu-xenial eclipse/stack-base:ubuntu-xenial
+        else
+          docker pull eclipse/stack-base:ubuntu-xenial
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch eclipse/stack-base:ubuntu-xenial
+        fi
+        docker pull camino.azurecr.io/ubuntu:16.04
+        if [[ $? == 0 ]]; then
+          docker tag camino.azurecr.io/ubuntu:16.04 ubuntu:16.04
+        else
+          docker pull ubuntu:16.04
+        fi
+        if [[ $? != 0 ]]; then
+          docker tag scratch ubuntu:16.04
+        fi
+        exit 0
+      continueOnError: true
+      failOnStderr: false
+      displayName: "Pulling cache. (errors will be ignored)"
+    - script: docker build -f recipes/stack-base/ubuntu-xenial/Dockerfile --cache-from eclipse/stack-base:ubuntu-xenial -t camino.azurecr.io/eclipse/stack-base:ubuntu-xenial recipes/stack-base/ubuntu-xenial
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:ubuntu-xenial"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:ubuntu-xenial
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:ubuntu-xenial"
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
 ### recipes/stack-base/debian-jessie/Dockerfile eclipse/stack-base:debian-jessie depends on debian:jessie-backports debian/jessie-backports
   - job: "recipes__stack__base__debian__jessie__Dockerfile"
     timeoutInMinutes: 0
