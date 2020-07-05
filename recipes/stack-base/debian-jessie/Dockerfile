@@ -32,6 +32,7 @@ RUN echo 'deb http://archive.debian.org/debian jessie-backports main' > /etc/apt
     bash-completion \
     git \
     subversion && \
+    apt-get upgrade -y && apt-get autoremove -y && \
     mkdir /var/run/sshd && \
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
