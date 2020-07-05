@@ -9,10 +9,11 @@
 FROM debian:jessie-backports
 
 ARG OPENJDK_VERSION=8u171-b11-1~bpo8+1
-
+RUN  cat /etc/apt/sources.list.d/backports.list
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 ENV PATH $JAVA_HOME/bin:$PATH
-RUN echo 'deb-src http://deb.debian.org/debian jessie-backports main' >> /etc/apt/sources.list.d/backports.list && \
+RUN echo 'deb http://archive.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/backports.list && \
+    echo "Acquire::Check-Valid-Until false;" | tee -a /etc/apt/apt.conf.d/10-nocheckvalid && \
     apt-get update && \
     apt-get -y install \
     openssh-server \
