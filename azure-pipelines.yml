@@ -17,18 +17,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/alpine_jdk8
+        docker pull camino.azurecr.io/eclipse/alpine_jdk8
         if [[ $? == 0 ]]; then
-          docker tag eclipse/alpine_jdk8 eclipse/alpine_jdk8
+          docker tag camino.azurecr.io/eclipse/alpine_jdk8 eclipse/alpine_jdk8
         else
           docker pull eclipse/alpine_jdk8
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/alpine_jdk8
         fi
-        docker pull openjdk:8u111-jre-alpine
+        docker pull camino.azurecr.io/openjdk:8u111-jre-alpine
         if [[ $? == 0 ]]; then
-          docker tag openjdk:8u111-jre-alpine openjdk:8u111-jre-alpine
+          docker tag camino.azurecr.io/openjdk:8u111-jre-alpine openjdk:8u111-jre-alpine
         else
           docker pull openjdk:8u111-jre-alpine
         fi
@@ -41,13 +41,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/alpine_jdk8 =~ stack-base ]]; then
-          docker build -f recipes/alpine_jdk8/Dockerfile -t eclipse/alpine_jdk8 recipes/alpine_jdk8
+          docker build -f recipes/alpine_jdk8/Dockerfile -t camino.azurecr.io/eclipse/alpine_jdk8 recipes/alpine_jdk8
         else
-          docker build -f recipes/alpine_jdk8/Dockerfile --cache-from eclipse/alpine_jdk8 -t eclipse/alpine_jdk8 recipes/alpine_jdk8
+          docker build -f recipes/alpine_jdk8/Dockerfile --cache-from eclipse/alpine_jdk8 -t camino.azurecr.io/eclipse/alpine_jdk8 recipes/alpine_jdk8
         fi
-      displayName: "Building eclipse/alpine_jdk8"
-    - script: docker push eclipse/alpine_jdk8
-      displayName: "Pushing eclipse/alpine_jdk8"
+      displayName: "Building camino.azurecr.io/eclipse/alpine_jdk8"
+    - script: docker push camino.azurecr.io/eclipse/alpine_jdk8
+      displayName: "Pushing camino.azurecr.io/eclipse/alpine_jdk8"
 
 ### recipes/android/Dockerfile eclipse/android depends on eclipse/stack-base:centos recipes/stack-base/centos
   - job: "recipes__android__Dockerfile"
@@ -66,18 +66,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/android
+        docker pull camino.azurecr.io/eclipse/android
         if [[ $? == 0 ]]; then
-          docker tag eclipse/android eclipse/android
+          docker tag camino.azurecr.io/eclipse/android eclipse/android
         else
           docker pull eclipse/android
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/android
         fi
-        docker pull eclipse/stack-base:centos
+        docker pull camino.azurecr.io/eclipse/stack-base:centos
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:centos eclipse/stack-base:centos
+          docker tag camino.azurecr.io/eclipse/stack-base:centos eclipse/stack-base:centos
         else
           docker pull eclipse/stack-base:centos
         fi
@@ -90,13 +90,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/android =~ stack-base ]]; then
-          docker build -f recipes/android/Dockerfile -t eclipse/android recipes/android
+          docker build -f recipes/android/Dockerfile -t camino.azurecr.io/eclipse/android recipes/android
         else
-          docker build -f recipes/android/Dockerfile --cache-from eclipse/android -t eclipse/android recipes/android
+          docker build -f recipes/android/Dockerfile --cache-from eclipse/android -t camino.azurecr.io/eclipse/android recipes/android
         fi
-      displayName: "Building eclipse/android"
-    - script: docker push eclipse/android
-      displayName: "Pushing eclipse/android"
+      displayName: "Building camino.azurecr.io/eclipse/android"
+    - script: docker push camino.azurecr.io/eclipse/android
+      displayName: "Pushing camino.azurecr.io/eclipse/android"
 
 ### recipes/angular/Dockerfile eclipse/angular depends on eclipse/node recipes/node
   - job: "recipes__angular__Dockerfile"
@@ -115,18 +115,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/angular
+        docker pull camino.azurecr.io/eclipse/angular
         if [[ $? == 0 ]]; then
-          docker tag eclipse/angular eclipse/angular
+          docker tag camino.azurecr.io/eclipse/angular eclipse/angular
         else
           docker pull eclipse/angular
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/angular
         fi
-        docker pull eclipse/node
+        docker pull camino.azurecr.io/eclipse/node
         if [[ $? == 0 ]]; then
-          docker tag eclipse/node eclipse/node
+          docker tag camino.azurecr.io/eclipse/node eclipse/node
         else
           docker pull eclipse/node
         fi
@@ -139,13 +139,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/angular =~ stack-base ]]; then
-          docker build -f recipes/angular/Dockerfile -t eclipse/angular recipes/angular
+          docker build -f recipes/angular/Dockerfile -t camino.azurecr.io/eclipse/angular recipes/angular
         else
-          docker build -f recipes/angular/Dockerfile --cache-from eclipse/angular -t eclipse/angular recipes/angular
+          docker build -f recipes/angular/Dockerfile --cache-from eclipse/angular -t camino.azurecr.io/eclipse/angular recipes/angular
         fi
-      displayName: "Building eclipse/angular"
-    - script: docker push eclipse/angular
-      displayName: "Pushing eclipse/angular"
+      displayName: "Building camino.azurecr.io/eclipse/angular"
+    - script: docker push camino.azurecr.io/eclipse/angular
+      displayName: "Pushing camino.azurecr.io/eclipse/angular"
 
 ### recipes/centos_ceylon_nodejs_dart/Dockerfile eclipse/centos_ceylon_nodejs_dart depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
   - job: "recipes__centos_ceylon_nodejs_dart__Dockerfile"
@@ -163,18 +163,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_ceylon_nodejs_dart
+        docker pull camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_ceylon_nodejs_dart eclipse/centos_ceylon_nodejs_dart
+          docker tag camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart eclipse/centos_ceylon_nodejs_dart
         else
           docker pull eclipse/centos_ceylon_nodejs_dart
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_ceylon_nodejs_dart
         fi
-        docker pull registry.centos.org/che-stacks/centos-jdk8
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
         else
           docker pull registry.centos.org/che-stacks/centos-jdk8
         fi
@@ -187,13 +187,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_ceylon_nodejs_dart =~ stack-base ]]; then
-          docker build -f recipes/centos_ceylon_nodejs_dart/Dockerfile -t eclipse/centos_ceylon_nodejs_dart recipes/centos_ceylon_nodejs_dart
+          docker build -f recipes/centos_ceylon_nodejs_dart/Dockerfile -t camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart recipes/centos_ceylon_nodejs_dart
         else
-          docker build -f recipes/centos_ceylon_nodejs_dart/Dockerfile --cache-from eclipse/centos_ceylon_nodejs_dart -t eclipse/centos_ceylon_nodejs_dart recipes/centos_ceylon_nodejs_dart
+          docker build -f recipes/centos_ceylon_nodejs_dart/Dockerfile --cache-from eclipse/centos_ceylon_nodejs_dart -t camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart recipes/centos_ceylon_nodejs_dart
         fi
-      displayName: "Building eclipse/centos_ceylon_nodejs_dart"
-    - script: docker push eclipse/centos_ceylon_nodejs_dart
-      displayName: "Pushing eclipse/centos_ceylon_nodejs_dart"
+      displayName: "Building camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart"
+    - script: docker push camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_ceylon_nodejs_dart"
 
 ### recipes/centos_dotnet20/Dockerfile eclipse/centos_dotnet20 depends on registry.centos.org/che-stacks/centos-stack-base:latest registry.centos.org/che-stacks/centos-stack-base/latest
   - job: "recipes__centos_dotnet20__Dockerfile"
@@ -211,18 +211,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_dotnet20
+        docker pull camino.azurecr.io/eclipse/centos_dotnet20
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_dotnet20 eclipse/centos_dotnet20
+          docker tag camino.azurecr.io/eclipse/centos_dotnet20 eclipse/centos_dotnet20
         else
           docker pull eclipse/centos_dotnet20
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_dotnet20
         fi
-        docker pull registry.centos.org/che-stacks/centos-stack-base:latest
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base:latest
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-stack-base:latest registry.centos.org/che-stacks/centos-stack-base:latest
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base:latest registry.centos.org/che-stacks/centos-stack-base:latest
         else
           docker pull registry.centos.org/che-stacks/centos-stack-base:latest
         fi
@@ -235,13 +235,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_dotnet20 =~ stack-base ]]; then
-          docker build -f recipes/centos_dotnet20/Dockerfile -t eclipse/centos_dotnet20 recipes/centos_dotnet20
+          docker build -f recipes/centos_dotnet20/Dockerfile -t camino.azurecr.io/eclipse/centos_dotnet20 recipes/centos_dotnet20
         else
-          docker build -f recipes/centos_dotnet20/Dockerfile --cache-from eclipse/centos_dotnet20 -t eclipse/centos_dotnet20 recipes/centos_dotnet20
+          docker build -f recipes/centos_dotnet20/Dockerfile --cache-from eclipse/centos_dotnet20 -t camino.azurecr.io/eclipse/centos_dotnet20 recipes/centos_dotnet20
         fi
-      displayName: "Building eclipse/centos_dotnet20"
-    - script: docker push eclipse/centos_dotnet20
-      displayName: "Pushing eclipse/centos_dotnet20"
+      displayName: "Building camino.azurecr.io/eclipse/centos_dotnet20"
+    - script: docker push camino.azurecr.io/eclipse/centos_dotnet20
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_dotnet20"
 
 ### recipes/centos_go/Dockerfile eclipse/centos_go depends on registry.centos.org/che-stacks/centos-nodejs registry.centos.org/che-stacks/centos-nodejs
   - job: "recipes__centos_go__Dockerfile"
@@ -259,18 +259,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_go
+        docker pull camino.azurecr.io/eclipse/centos_go
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_go eclipse/centos_go
+          docker tag camino.azurecr.io/eclipse/centos_go eclipse/centos_go
         else
           docker pull eclipse/centos_go
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_go
         fi
-        docker pull registry.centos.org/che-stacks/centos-nodejs
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-nodejs
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-nodejs registry.centos.org/che-stacks/centos-nodejs
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-nodejs registry.centos.org/che-stacks/centos-nodejs
         else
           docker pull registry.centos.org/che-stacks/centos-nodejs
         fi
@@ -283,13 +283,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_go =~ stack-base ]]; then
-          docker build -f recipes/centos_go/Dockerfile -t eclipse/centos_go recipes/centos_go
+          docker build -f recipes/centos_go/Dockerfile -t camino.azurecr.io/eclipse/centos_go recipes/centos_go
         else
-          docker build -f recipes/centos_go/Dockerfile --cache-from eclipse/centos_go -t eclipse/centos_go recipes/centos_go
+          docker build -f recipes/centos_go/Dockerfile --cache-from eclipse/centos_go -t camino.azurecr.io/eclipse/centos_go recipes/centos_go
         fi
-      displayName: "Building eclipse/centos_go"
-    - script: docker push eclipse/centos_go
-      displayName: "Pushing eclipse/centos_go"
+      displayName: "Building camino.azurecr.io/eclipse/centos_go"
+    - script: docker push camino.azurecr.io/eclipse/centos_go
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_go"
 
 ### recipes/centos_jdk8/Dockerfile eclipse/centos_jdk8 depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
   - job: "recipes__centos_jdk8__Dockerfile"
@@ -307,18 +307,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_jdk8
+        docker pull camino.azurecr.io/eclipse/centos_jdk8
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_jdk8 eclipse/centos_jdk8
+          docker tag camino.azurecr.io/eclipse/centos_jdk8 eclipse/centos_jdk8
         else
           docker pull eclipse/centos_jdk8
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_jdk8
         fi
-        docker pull registry.centos.org/che-stacks/centos-stack-base
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
         else
           docker pull registry.centos.org/che-stacks/centos-stack-base
         fi
@@ -331,13 +331,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_jdk8 =~ stack-base ]]; then
-          docker build -f recipes/centos_jdk8/Dockerfile -t eclipse/centos_jdk8 recipes/centos_jdk8
+          docker build -f recipes/centos_jdk8/Dockerfile -t camino.azurecr.io/eclipse/centos_jdk8 recipes/centos_jdk8
         else
-          docker build -f recipes/centos_jdk8/Dockerfile --cache-from eclipse/centos_jdk8 -t eclipse/centos_jdk8 recipes/centos_jdk8
+          docker build -f recipes/centos_jdk8/Dockerfile --cache-from eclipse/centos_jdk8 -t camino.azurecr.io/eclipse/centos_jdk8 recipes/centos_jdk8
         fi
-      displayName: "Building eclipse/centos_jdk8"
-    - script: docker push eclipse/centos_jdk8
-      displayName: "Pushing eclipse/centos_jdk8"
+      displayName: "Building camino.azurecr.io/eclipse/centos_jdk8"
+    - script: docker push camino.azurecr.io/eclipse/centos_jdk8
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_jdk8"
 
 ### recipes/centos_nodejs/Dockerfile eclipse/centos_nodejs depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
   - job: "recipes__centos_nodejs__Dockerfile"
@@ -355,18 +355,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_nodejs
+        docker pull camino.azurecr.io/eclipse/centos_nodejs
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_nodejs eclipse/centos_nodejs
+          docker tag camino.azurecr.io/eclipse/centos_nodejs eclipse/centos_nodejs
         else
           docker pull eclipse/centos_nodejs
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_nodejs
         fi
-        docker pull registry.centos.org/che-stacks/centos-stack-base
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
         else
           docker pull registry.centos.org/che-stacks/centos-stack-base
         fi
@@ -379,13 +379,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_nodejs =~ stack-base ]]; then
-          docker build -f recipes/centos_nodejs/Dockerfile -t eclipse/centos_nodejs recipes/centos_nodejs
+          docker build -f recipes/centos_nodejs/Dockerfile -t camino.azurecr.io/eclipse/centos_nodejs recipes/centos_nodejs
         else
-          docker build -f recipes/centos_nodejs/Dockerfile --cache-from eclipse/centos_nodejs -t eclipse/centos_nodejs recipes/centos_nodejs
+          docker build -f recipes/centos_nodejs/Dockerfile --cache-from eclipse/centos_nodejs -t camino.azurecr.io/eclipse/centos_nodejs recipes/centos_nodejs
         fi
-      displayName: "Building eclipse/centos_nodejs"
-    - script: docker push eclipse/centos_nodejs
-      displayName: "Pushing eclipse/centos_nodejs"
+      displayName: "Building camino.azurecr.io/eclipse/centos_nodejs"
+    - script: docker push camino.azurecr.io/eclipse/centos_nodejs
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_nodejs"
 
 ### recipes/centos_python/2/Dockerfile eclipse/centos_python:2 depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
   - job: "recipes__centos_python__2__Dockerfile"
@@ -403,18 +403,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_python:2
+        docker pull camino.azurecr.io/eclipse/centos_python:2
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_python:2 eclipse/centos_python:2
+          docker tag camino.azurecr.io/eclipse/centos_python:2 eclipse/centos_python:2
         else
           docker pull eclipse/centos_python:2
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_python:2
         fi
-        docker pull registry.centos.org/che-stacks/centos-stack-base
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
         else
           docker pull registry.centos.org/che-stacks/centos-stack-base
         fi
@@ -427,13 +427,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_python:2 =~ stack-base ]]; then
-          docker build -f recipes/centos_python/2/Dockerfile -t eclipse/centos_python:2 recipes/centos_python/2
+          docker build -f recipes/centos_python/2/Dockerfile -t camino.azurecr.io/eclipse/centos_python:2 recipes/centos_python/2
         else
-          docker build -f recipes/centos_python/2/Dockerfile --cache-from eclipse/centos_python:2 -t eclipse/centos_python:2 recipes/centos_python/2
+          docker build -f recipes/centos_python/2/Dockerfile --cache-from eclipse/centos_python:2 -t camino.azurecr.io/eclipse/centos_python:2 recipes/centos_python/2
         fi
-      displayName: "Building eclipse/centos_python:2"
-    - script: docker push eclipse/centos_python:2
-      displayName: "Pushing eclipse/centos_python:2"
+      displayName: "Building camino.azurecr.io/eclipse/centos_python:2"
+    - script: docker push camino.azurecr.io/eclipse/centos_python:2
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_python:2"
 
 ### recipes/centos_python/3/Dockerfile eclipse/centos_python:3 depends on registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
   - job: "recipes__centos_python__3__Dockerfile"
@@ -451,18 +451,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_python:3
+        docker pull camino.azurecr.io/eclipse/centos_python:3
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_python:3 eclipse/centos_python:3
+          docker tag camino.azurecr.io/eclipse/centos_python:3 eclipse/centos_python:3
         else
           docker pull eclipse/centos_python:3
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_python:3
         fi
-        docker pull registry.centos.org/che-stacks/centos-stack-base
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-stack-base registry.centos.org/che-stacks/centos-stack-base
         else
           docker pull registry.centos.org/che-stacks/centos-stack-base
         fi
@@ -475,13 +475,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_python:3 =~ stack-base ]]; then
-          docker build -f recipes/centos_python/3/Dockerfile -t eclipse/centos_python:3 recipes/centos_python/3
+          docker build -f recipes/centos_python/3/Dockerfile -t camino.azurecr.io/eclipse/centos_python:3 recipes/centos_python/3
         else
-          docker build -f recipes/centos_python/3/Dockerfile --cache-from eclipse/centos_python:3 -t eclipse/centos_python:3 recipes/centos_python/3
+          docker build -f recipes/centos_python/3/Dockerfile --cache-from eclipse/centos_python:3 -t camino.azurecr.io/eclipse/centos_python:3 recipes/centos_python/3
         fi
-      displayName: "Building eclipse/centos_python:3"
-    - script: docker push eclipse/centos_python:3
-      displayName: "Pushing eclipse/centos_python:3"
+      displayName: "Building camino.azurecr.io/eclipse/centos_python:3"
+    - script: docker push camino.azurecr.io/eclipse/centos_python:3
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_python:3"
 
 ### recipes/centos_spring_boot/Dockerfile eclipse/centos_spring_boot depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
   - job: "recipes__centos_spring_boot__Dockerfile"
@@ -499,18 +499,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_spring_boot
+        docker pull camino.azurecr.io/eclipse/centos_spring_boot
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_spring_boot eclipse/centos_spring_boot
+          docker tag camino.azurecr.io/eclipse/centos_spring_boot eclipse/centos_spring_boot
         else
           docker pull eclipse/centos_spring_boot
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_spring_boot
         fi
-        docker pull registry.centos.org/che-stacks/centos-jdk8
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
         else
           docker pull registry.centos.org/che-stacks/centos-jdk8
         fi
@@ -523,13 +523,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_spring_boot =~ stack-base ]]; then
-          docker build -f recipes/centos_spring_boot/Dockerfile -t eclipse/centos_spring_boot recipes/centos_spring_boot
+          docker build -f recipes/centos_spring_boot/Dockerfile -t camino.azurecr.io/eclipse/centos_spring_boot recipes/centos_spring_boot
         else
-          docker build -f recipes/centos_spring_boot/Dockerfile --cache-from eclipse/centos_spring_boot -t eclipse/centos_spring_boot recipes/centos_spring_boot
+          docker build -f recipes/centos_spring_boot/Dockerfile --cache-from eclipse/centos_spring_boot -t camino.azurecr.io/eclipse/centos_spring_boot recipes/centos_spring_boot
         fi
-      displayName: "Building eclipse/centos_spring_boot"
-    - script: docker push eclipse/centos_spring_boot
-      displayName: "Pushing eclipse/centos_spring_boot"
+      displayName: "Building camino.azurecr.io/eclipse/centos_spring_boot"
+    - script: docker push camino.azurecr.io/eclipse/centos_spring_boot
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_spring_boot"
 
 ### recipes/centos_vertx/Dockerfile eclipse/centos_vertx depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
   - job: "recipes__centos_vertx__Dockerfile"
@@ -547,18 +547,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_vertx
+        docker pull camino.azurecr.io/eclipse/centos_vertx
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_vertx eclipse/centos_vertx
+          docker tag camino.azurecr.io/eclipse/centos_vertx eclipse/centos_vertx
         else
           docker pull eclipse/centos_vertx
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_vertx
         fi
-        docker pull registry.centos.org/che-stacks/centos-jdk8
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
         else
           docker pull registry.centos.org/che-stacks/centos-jdk8
         fi
@@ -571,13 +571,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_vertx =~ stack-base ]]; then
-          docker build -f recipes/centos_vertx/Dockerfile -t eclipse/centos_vertx recipes/centos_vertx
+          docker build -f recipes/centos_vertx/Dockerfile -t camino.azurecr.io/eclipse/centos_vertx recipes/centos_vertx
         else
-          docker build -f recipes/centos_vertx/Dockerfile --cache-from eclipse/centos_vertx -t eclipse/centos_vertx recipes/centos_vertx
+          docker build -f recipes/centos_vertx/Dockerfile --cache-from eclipse/centos_vertx -t camino.azurecr.io/eclipse/centos_vertx recipes/centos_vertx
         fi
-      displayName: "Building eclipse/centos_vertx"
-    - script: docker push eclipse/centos_vertx
-      displayName: "Pushing eclipse/centos_vertx"
+      displayName: "Building camino.azurecr.io/eclipse/centos_vertx"
+    - script: docker push camino.azurecr.io/eclipse/centos_vertx
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_vertx"
 
 ### recipes/centos_wildfly_swarm/Dockerfile eclipse/centos_wildfly_swarm depends on registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
   - job: "recipes__centos_wildfly_swarm__Dockerfile"
@@ -595,18 +595,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/centos_wildfly_swarm
+        docker pull camino.azurecr.io/eclipse/centos_wildfly_swarm
         if [[ $? == 0 ]]; then
-          docker tag eclipse/centos_wildfly_swarm eclipse/centos_wildfly_swarm
+          docker tag camino.azurecr.io/eclipse/centos_wildfly_swarm eclipse/centos_wildfly_swarm
         else
           docker pull eclipse/centos_wildfly_swarm
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/centos_wildfly_swarm
         fi
-        docker pull registry.centos.org/che-stacks/centos-jdk8
+        docker pull camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
+          docker tag camino.azurecr.io/registry.centos.org/che-stacks/centos-jdk8 registry.centos.org/che-stacks/centos-jdk8
         else
           docker pull registry.centos.org/che-stacks/centos-jdk8
         fi
@@ -619,13 +619,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/centos_wildfly_swarm =~ stack-base ]]; then
-          docker build -f recipes/centos_wildfly_swarm/Dockerfile -t eclipse/centos_wildfly_swarm recipes/centos_wildfly_swarm
+          docker build -f recipes/centos_wildfly_swarm/Dockerfile -t camino.azurecr.io/eclipse/centos_wildfly_swarm recipes/centos_wildfly_swarm
         else
-          docker build -f recipes/centos_wildfly_swarm/Dockerfile --cache-from eclipse/centos_wildfly_swarm -t eclipse/centos_wildfly_swarm recipes/centos_wildfly_swarm
+          docker build -f recipes/centos_wildfly_swarm/Dockerfile --cache-from eclipse/centos_wildfly_swarm -t camino.azurecr.io/eclipse/centos_wildfly_swarm recipes/centos_wildfly_swarm
         fi
-      displayName: "Building eclipse/centos_wildfly_swarm"
-    - script: docker push eclipse/centos_wildfly_swarm
-      displayName: "Pushing eclipse/centos_wildfly_swarm"
+      displayName: "Building camino.azurecr.io/eclipse/centos_wildfly_swarm"
+    - script: docker push camino.azurecr.io/eclipse/centos_wildfly_swarm
+      displayName: "Pushing camino.azurecr.io/eclipse/centos_wildfly_swarm"
 
 ### recipes/cpp_gcc/Dockerfile eclipse/cpp_gcc depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__cpp_gcc__Dockerfile"
@@ -644,18 +644,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/cpp_gcc
+        docker pull camino.azurecr.io/eclipse/cpp_gcc
         if [[ $? == 0 ]]; then
-          docker tag eclipse/cpp_gcc eclipse/cpp_gcc
+          docker tag camino.azurecr.io/eclipse/cpp_gcc eclipse/cpp_gcc
         else
           docker pull eclipse/cpp_gcc
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/cpp_gcc
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -668,13 +668,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/cpp_gcc =~ stack-base ]]; then
-          docker build -f recipes/cpp_gcc/Dockerfile -t eclipse/cpp_gcc recipes/cpp_gcc
+          docker build -f recipes/cpp_gcc/Dockerfile -t camino.azurecr.io/eclipse/cpp_gcc recipes/cpp_gcc
         else
-          docker build -f recipes/cpp_gcc/Dockerfile --cache-from eclipse/cpp_gcc -t eclipse/cpp_gcc recipes/cpp_gcc
+          docker build -f recipes/cpp_gcc/Dockerfile --cache-from eclipse/cpp_gcc -t camino.azurecr.io/eclipse/cpp_gcc recipes/cpp_gcc
         fi
-      displayName: "Building eclipse/cpp_gcc"
-    - script: docker push eclipse/cpp_gcc
-      displayName: "Pushing eclipse/cpp_gcc"
+      displayName: "Building camino.azurecr.io/eclipse/cpp_gcc"
+    - script: docker push camino.azurecr.io/eclipse/cpp_gcc
+      displayName: "Pushing camino.azurecr.io/eclipse/cpp_gcc"
 
 ### recipes/debian_jdk8/Dockerfile eclipse/debian_jdk8 depends on eclipse/stack-base:debian recipes/stack-base/debian
   - job: "recipes__debian_jdk8__Dockerfile"
@@ -693,18 +693,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/debian_jdk8
+        docker pull camino.azurecr.io/eclipse/debian_jdk8
         if [[ $? == 0 ]]; then
-          docker tag eclipse/debian_jdk8 eclipse/debian_jdk8
+          docker tag camino.azurecr.io/eclipse/debian_jdk8 eclipse/debian_jdk8
         else
           docker pull eclipse/debian_jdk8
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/debian_jdk8
         fi
-        docker pull eclipse/stack-base:debian
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian eclipse/stack-base:debian
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
         else
           docker pull eclipse/stack-base:debian
         fi
@@ -717,13 +717,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/debian_jdk8 =~ stack-base ]]; then
-          docker build -f recipes/debian_jdk8/Dockerfile -t eclipse/debian_jdk8 recipes/debian_jdk8
+          docker build -f recipes/debian_jdk8/Dockerfile -t camino.azurecr.io/eclipse/debian_jdk8 recipes/debian_jdk8
         else
-          docker build -f recipes/debian_jdk8/Dockerfile --cache-from eclipse/debian_jdk8 -t eclipse/debian_jdk8 recipes/debian_jdk8
+          docker build -f recipes/debian_jdk8/Dockerfile --cache-from eclipse/debian_jdk8 -t camino.azurecr.io/eclipse/debian_jdk8 recipes/debian_jdk8
         fi
-      displayName: "Building eclipse/debian_jdk8"
-    - script: docker push eclipse/debian_jdk8
-      displayName: "Pushing eclipse/debian_jdk8"
+      displayName: "Building camino.azurecr.io/eclipse/debian_jdk8"
+    - script: docker push camino.azurecr.io/eclipse/debian_jdk8
+      displayName: "Pushing camino.azurecr.io/eclipse/debian_jdk8"
 
 ### recipes/debian_jdk8_node/Dockerfile eclipse/debian_jdk8_node depends on eclipse/debian_jdk8 recipes/debian_jdk8
   - job: "recipes__debian_jdk8_node__Dockerfile"
@@ -742,18 +742,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/debian_jdk8_node
+        docker pull camino.azurecr.io/eclipse/debian_jdk8_node
         if [[ $? == 0 ]]; then
-          docker tag eclipse/debian_jdk8_node eclipse/debian_jdk8_node
+          docker tag camino.azurecr.io/eclipse/debian_jdk8_node eclipse/debian_jdk8_node
         else
           docker pull eclipse/debian_jdk8_node
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/debian_jdk8_node
         fi
-        docker pull eclipse/debian_jdk8
+        docker pull camino.azurecr.io/eclipse/debian_jdk8
         if [[ $? == 0 ]]; then
-          docker tag eclipse/debian_jdk8 eclipse/debian_jdk8
+          docker tag camino.azurecr.io/eclipse/debian_jdk8 eclipse/debian_jdk8
         else
           docker pull eclipse/debian_jdk8
         fi
@@ -766,13 +766,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/debian_jdk8_node =~ stack-base ]]; then
-          docker build -f recipes/debian_jdk8_node/Dockerfile -t eclipse/debian_jdk8_node recipes/debian_jdk8_node
+          docker build -f recipes/debian_jdk8_node/Dockerfile -t camino.azurecr.io/eclipse/debian_jdk8_node recipes/debian_jdk8_node
         else
-          docker build -f recipes/debian_jdk8_node/Dockerfile --cache-from eclipse/debian_jdk8_node -t eclipse/debian_jdk8_node recipes/debian_jdk8_node
+          docker build -f recipes/debian_jdk8_node/Dockerfile --cache-from eclipse/debian_jdk8_node -t camino.azurecr.io/eclipse/debian_jdk8_node recipes/debian_jdk8_node
         fi
-      displayName: "Building eclipse/debian_jdk8_node"
-    - script: docker push eclipse/debian_jdk8_node
-      displayName: "Pushing eclipse/debian_jdk8_node"
+      displayName: "Building camino.azurecr.io/eclipse/debian_jdk8_node"
+    - script: docker push camino.azurecr.io/eclipse/debian_jdk8_node
+      displayName: "Pushing camino.azurecr.io/eclipse/debian_jdk8_node"
 
 ### recipes/dotnet_core/Dockerfile eclipse/dotnet_core depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__dotnet_core__Dockerfile"
@@ -791,18 +791,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/dotnet_core
+        docker pull camino.azurecr.io/eclipse/dotnet_core
         if [[ $? == 0 ]]; then
-          docker tag eclipse/dotnet_core eclipse/dotnet_core
+          docker tag camino.azurecr.io/eclipse/dotnet_core eclipse/dotnet_core
         else
           docker pull eclipse/dotnet_core
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/dotnet_core
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -815,13 +815,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/dotnet_core =~ stack-base ]]; then
-          docker build -f recipes/dotnet_core/Dockerfile -t eclipse/dotnet_core recipes/dotnet_core
+          docker build -f recipes/dotnet_core/Dockerfile -t camino.azurecr.io/eclipse/dotnet_core recipes/dotnet_core
         else
-          docker build -f recipes/dotnet_core/Dockerfile --cache-from eclipse/dotnet_core -t eclipse/dotnet_core recipes/dotnet_core
+          docker build -f recipes/dotnet_core/Dockerfile --cache-from eclipse/dotnet_core -t camino.azurecr.io/eclipse/dotnet_core recipes/dotnet_core
         fi
-      displayName: "Building eclipse/dotnet_core"
-    - script: docker push eclipse/dotnet_core
-      displayName: "Pushing eclipse/dotnet_core"
+      displayName: "Building camino.azurecr.io/eclipse/dotnet_core"
+    - script: docker push camino.azurecr.io/eclipse/dotnet_core
+      displayName: "Pushing camino.azurecr.io/eclipse/dotnet_core"
 
 ### recipes/hadoop-dev/Dockerfile eclipse/hadoop-dev depends on eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
   - job: "recipes__hadoop__dev__Dockerfile"
@@ -840,18 +840,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/hadoop-dev
+        docker pull camino.azurecr.io/eclipse/hadoop-dev
         if [[ $? == 0 ]]; then
-          docker tag eclipse/hadoop-dev eclipse/hadoop-dev
+          docker tag camino.azurecr.io/eclipse/hadoop-dev eclipse/hadoop-dev
         else
           docker pull eclipse/hadoop-dev
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/hadoop-dev
         fi
-        docker pull eclipse/ubuntu_jdk8
+        docker pull camino.azurecr.io/eclipse/ubuntu_jdk8
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
+          docker tag camino.azurecr.io/eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
         else
           docker pull eclipse/ubuntu_jdk8
         fi
@@ -864,13 +864,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/hadoop-dev =~ stack-base ]]; then
-          docker build -f recipes/hadoop-dev/Dockerfile -t eclipse/hadoop-dev recipes/hadoop-dev
+          docker build -f recipes/hadoop-dev/Dockerfile -t camino.azurecr.io/eclipse/hadoop-dev recipes/hadoop-dev
         else
-          docker build -f recipes/hadoop-dev/Dockerfile --cache-from eclipse/hadoop-dev -t eclipse/hadoop-dev recipes/hadoop-dev
+          docker build -f recipes/hadoop-dev/Dockerfile --cache-from eclipse/hadoop-dev -t camino.azurecr.io/eclipse/hadoop-dev recipes/hadoop-dev
         fi
-      displayName: "Building eclipse/hadoop-dev"
-    - script: docker push eclipse/hadoop-dev
-      displayName: "Pushing eclipse/hadoop-dev"
+      displayName: "Building camino.azurecr.io/eclipse/hadoop-dev"
+    - script: docker push camino.azurecr.io/eclipse/hadoop-dev
+      displayName: "Pushing camino.azurecr.io/eclipse/hadoop-dev"
 
 ### recipes/hugo/0.54.0-debian/Dockerfile eclipse/hugo:0.54.0-debian depends on eclipse/stack-base:debian recipes/stack-base/debian
   - job: "recipes__hugo__0__54__0__debian__Dockerfile"
@@ -889,18 +889,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/hugo:0.54.0-debian
+        docker pull camino.azurecr.io/eclipse/hugo:0.54.0-debian
         if [[ $? == 0 ]]; then
-          docker tag eclipse/hugo:0.54.0-debian eclipse/hugo:0.54.0-debian
+          docker tag camino.azurecr.io/eclipse/hugo:0.54.0-debian eclipse/hugo:0.54.0-debian
         else
           docker pull eclipse/hugo:0.54.0-debian
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/hugo:0.54.0-debian
         fi
-        docker pull eclipse/stack-base:debian
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian eclipse/stack-base:debian
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
         else
           docker pull eclipse/stack-base:debian
         fi
@@ -913,13 +913,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/hugo:0.54.0-debian =~ stack-base ]]; then
-          docker build -f recipes/hugo/0.54.0-debian/Dockerfile -t eclipse/hugo:0.54.0-debian recipes/hugo/0.54.0-debian
+          docker build -f recipes/hugo/0.54.0-debian/Dockerfile -t camino.azurecr.io/eclipse/hugo:0.54.0-debian recipes/hugo/0.54.0-debian
         else
-          docker build -f recipes/hugo/0.54.0-debian/Dockerfile --cache-from eclipse/hugo:0.54.0-debian -t eclipse/hugo:0.54.0-debian recipes/hugo/0.54.0-debian
+          docker build -f recipes/hugo/0.54.0-debian/Dockerfile --cache-from eclipse/hugo:0.54.0-debian -t camino.azurecr.io/eclipse/hugo:0.54.0-debian recipes/hugo/0.54.0-debian
         fi
-      displayName: "Building eclipse/hugo:0.54.0-debian"
-    - script: docker push eclipse/hugo:0.54.0-debian
-      displayName: "Pushing eclipse/hugo:0.54.0-debian"
+      displayName: "Building camino.azurecr.io/eclipse/hugo:0.54.0-debian"
+    - script: docker push camino.azurecr.io/eclipse/hugo:0.54.0-debian
+      displayName: "Pushing camino.azurecr.io/eclipse/hugo:0.54.0-debian"
 
 ### recipes/hugo/0.54.0-ubuntu/Dockerfile eclipse/hugo:0.54.0-ubuntu depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__hugo__0__54__0__ubuntu__Dockerfile"
@@ -938,18 +938,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/hugo:0.54.0-ubuntu
+        docker pull camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/hugo:0.54.0-ubuntu eclipse/hugo:0.54.0-ubuntu
+          docker tag camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu eclipse/hugo:0.54.0-ubuntu
         else
           docker pull eclipse/hugo:0.54.0-ubuntu
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/hugo:0.54.0-ubuntu
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -962,13 +962,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/hugo:0.54.0-ubuntu =~ stack-base ]]; then
-          docker build -f recipes/hugo/0.54.0-ubuntu/Dockerfile -t eclipse/hugo:0.54.0-ubuntu recipes/hugo/0.54.0-ubuntu
+          docker build -f recipes/hugo/0.54.0-ubuntu/Dockerfile -t camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu recipes/hugo/0.54.0-ubuntu
         else
-          docker build -f recipes/hugo/0.54.0-ubuntu/Dockerfile --cache-from eclipse/hugo:0.54.0-ubuntu -t eclipse/hugo:0.54.0-ubuntu recipes/hugo/0.54.0-ubuntu
+          docker build -f recipes/hugo/0.54.0-ubuntu/Dockerfile --cache-from eclipse/hugo:0.54.0-ubuntu -t camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu recipes/hugo/0.54.0-ubuntu
         fi
-      displayName: "Building eclipse/hugo:0.54.0-ubuntu"
-    - script: docker push eclipse/hugo:0.54.0-ubuntu
-      displayName: "Pushing eclipse/hugo:0.54.0-ubuntu"
+      displayName: "Building camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu"
+    - script: docker push camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu
+      displayName: "Pushing camino.azurecr.io/eclipse/hugo:0.54.0-ubuntu"
 
 ### recipes/hugo/debian/Dockerfile eclipse/hugo:debian depends on eclipse/stack-base:debian recipes/stack-base/debian
   - job: "recipes__hugo__debian__Dockerfile"
@@ -987,18 +987,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/hugo:debian
+        docker pull camino.azurecr.io/eclipse/hugo:debian
         if [[ $? == 0 ]]; then
-          docker tag eclipse/hugo:debian eclipse/hugo:debian
+          docker tag camino.azurecr.io/eclipse/hugo:debian eclipse/hugo:debian
         else
           docker pull eclipse/hugo:debian
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/hugo:debian
         fi
-        docker pull eclipse/stack-base:debian
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian eclipse/stack-base:debian
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
         else
           docker pull eclipse/stack-base:debian
         fi
@@ -1011,13 +1011,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/hugo:debian =~ stack-base ]]; then
-          docker build -f recipes/hugo/debian/Dockerfile -t eclipse/hugo:debian recipes/hugo/debian
+          docker build -f recipes/hugo/debian/Dockerfile -t camino.azurecr.io/eclipse/hugo:debian recipes/hugo/debian
         else
-          docker build -f recipes/hugo/debian/Dockerfile --cache-from eclipse/hugo:debian -t eclipse/hugo:debian recipes/hugo/debian
+          docker build -f recipes/hugo/debian/Dockerfile --cache-from eclipse/hugo:debian -t camino.azurecr.io/eclipse/hugo:debian recipes/hugo/debian
         fi
-      displayName: "Building eclipse/hugo:debian"
-    - script: docker push eclipse/hugo:debian
-      displayName: "Pushing eclipse/hugo:debian"
+      displayName: "Building camino.azurecr.io/eclipse/hugo:debian"
+    - script: docker push camino.azurecr.io/eclipse/hugo:debian
+      displayName: "Pushing camino.azurecr.io/eclipse/hugo:debian"
 
 ### recipes/hugo/ubuntu/Dockerfile eclipse/hugo:ubuntu depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__hugo__ubuntu__Dockerfile"
@@ -1036,18 +1036,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/hugo:ubuntu
+        docker pull camino.azurecr.io/eclipse/hugo:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/hugo:ubuntu eclipse/hugo:ubuntu
+          docker tag camino.azurecr.io/eclipse/hugo:ubuntu eclipse/hugo:ubuntu
         else
           docker pull eclipse/hugo:ubuntu
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/hugo:ubuntu
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -1060,13 +1060,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/hugo:ubuntu =~ stack-base ]]; then
-          docker build -f recipes/hugo/ubuntu/Dockerfile -t eclipse/hugo:ubuntu recipes/hugo/ubuntu
+          docker build -f recipes/hugo/ubuntu/Dockerfile -t camino.azurecr.io/eclipse/hugo:ubuntu recipes/hugo/ubuntu
         else
-          docker build -f recipes/hugo/ubuntu/Dockerfile --cache-from eclipse/hugo:ubuntu -t eclipse/hugo:ubuntu recipes/hugo/ubuntu
+          docker build -f recipes/hugo/ubuntu/Dockerfile --cache-from eclipse/hugo:ubuntu -t camino.azurecr.io/eclipse/hugo:ubuntu recipes/hugo/ubuntu
         fi
-      displayName: "Building eclipse/hugo:ubuntu"
-    - script: docker push eclipse/hugo:ubuntu
-      displayName: "Pushing eclipse/hugo:ubuntu"
+      displayName: "Building camino.azurecr.io/eclipse/hugo:ubuntu"
+    - script: docker push camino.azurecr.io/eclipse/hugo:ubuntu
+      displayName: "Pushing camino.azurecr.io/eclipse/hugo:ubuntu"
 
 ### recipes/kotlin/Dockerfile eclipse/kotlin depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__kotlin__Dockerfile"
@@ -1085,18 +1085,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/kotlin
+        docker pull camino.azurecr.io/eclipse/kotlin
         if [[ $? == 0 ]]; then
-          docker tag eclipse/kotlin eclipse/kotlin
+          docker tag camino.azurecr.io/eclipse/kotlin eclipse/kotlin
         else
           docker pull eclipse/kotlin
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/kotlin
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -1109,13 +1109,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/kotlin =~ stack-base ]]; then
-          docker build -f recipes/kotlin/Dockerfile -t eclipse/kotlin recipes/kotlin
+          docker build -f recipes/kotlin/Dockerfile -t camino.azurecr.io/eclipse/kotlin recipes/kotlin
         else
-          docker build -f recipes/kotlin/Dockerfile --cache-from eclipse/kotlin -t eclipse/kotlin recipes/kotlin
+          docker build -f recipes/kotlin/Dockerfile --cache-from eclipse/kotlin -t camino.azurecr.io/eclipse/kotlin recipes/kotlin
         fi
-      displayName: "Building eclipse/kotlin"
-    - script: docker push eclipse/kotlin
-      displayName: "Pushing eclipse/kotlin"
+      displayName: "Building camino.azurecr.io/eclipse/kotlin"
+    - script: docker push camino.azurecr.io/eclipse/kotlin
+      displayName: "Pushing camino.azurecr.io/eclipse/kotlin"
 
 ### recipes/meteor/Dockerfile eclipse/meteor depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__meteor__Dockerfile"
@@ -1134,18 +1134,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/meteor
+        docker pull camino.azurecr.io/eclipse/meteor
         if [[ $? == 0 ]]; then
-          docker tag eclipse/meteor eclipse/meteor
+          docker tag camino.azurecr.io/eclipse/meteor eclipse/meteor
         else
           docker pull eclipse/meteor
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/meteor
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -1158,13 +1158,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/meteor =~ stack-base ]]; then
-          docker build -f recipes/meteor/Dockerfile -t eclipse/meteor recipes/meteor
+          docker build -f recipes/meteor/Dockerfile -t camino.azurecr.io/eclipse/meteor recipes/meteor
         else
-          docker build -f recipes/meteor/Dockerfile --cache-from eclipse/meteor -t eclipse/meteor recipes/meteor
+          docker build -f recipes/meteor/Dockerfile --cache-from eclipse/meteor -t camino.azurecr.io/eclipse/meteor recipes/meteor
         fi
-      displayName: "Building eclipse/meteor"
-    - script: docker push eclipse/meteor
-      displayName: "Pushing eclipse/meteor"
+      displayName: "Building camino.azurecr.io/eclipse/meteor"
+    - script: docker push camino.azurecr.io/eclipse/meteor
+      displayName: "Pushing camino.azurecr.io/eclipse/meteor"
 
 ### recipes/mysql/Dockerfile eclipse/mysql depends on mysql:5.7 mysql/5.7
   - job: "recipes__mysql__Dockerfile"
@@ -1182,18 +1182,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/mysql
+        docker pull camino.azurecr.io/eclipse/mysql
         if [[ $? == 0 ]]; then
-          docker tag eclipse/mysql eclipse/mysql
+          docker tag camino.azurecr.io/eclipse/mysql eclipse/mysql
         else
           docker pull eclipse/mysql
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/mysql
         fi
-        docker pull mysql:5.7
+        docker pull camino.azurecr.io/mysql:5.7
         if [[ $? == 0 ]]; then
-          docker tag mysql:5.7 mysql:5.7
+          docker tag camino.azurecr.io/mysql:5.7 mysql:5.7
         else
           docker pull mysql:5.7
         fi
@@ -1206,13 +1206,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/mysql =~ stack-base ]]; then
-          docker build -f recipes/mysql/Dockerfile -t eclipse/mysql recipes/mysql
+          docker build -f recipes/mysql/Dockerfile -t camino.azurecr.io/eclipse/mysql recipes/mysql
         else
-          docker build -f recipes/mysql/Dockerfile --cache-from eclipse/mysql -t eclipse/mysql recipes/mysql
+          docker build -f recipes/mysql/Dockerfile --cache-from eclipse/mysql -t camino.azurecr.io/eclipse/mysql recipes/mysql
         fi
-      displayName: "Building eclipse/mysql"
-    - script: docker push eclipse/mysql
-      displayName: "Pushing eclipse/mysql"
+      displayName: "Building camino.azurecr.io/eclipse/mysql"
+    - script: docker push camino.azurecr.io/eclipse/mysql
+      displayName: "Pushing camino.azurecr.io/eclipse/mysql"
 
 ### recipes/node/Dockerfile eclipse/node depends on eclipse/stack-base:debian recipes/stack-base/debian
   - job: "recipes__node__Dockerfile"
@@ -1231,18 +1231,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/node
+        docker pull camino.azurecr.io/eclipse/node
         if [[ $? == 0 ]]; then
-          docker tag eclipse/node eclipse/node
+          docker tag camino.azurecr.io/eclipse/node eclipse/node
         else
           docker pull eclipse/node
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/node
         fi
-        docker pull eclipse/stack-base:debian
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian eclipse/stack-base:debian
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
         else
           docker pull eclipse/stack-base:debian
         fi
@@ -1255,13 +1255,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/node =~ stack-base ]]; then
-          docker build -f recipes/node/Dockerfile -t eclipse/node recipes/node
+          docker build -f recipes/node/Dockerfile -t camino.azurecr.io/eclipse/node recipes/node
         else
-          docker build -f recipes/node/Dockerfile --cache-from eclipse/node -t eclipse/node recipes/node
+          docker build -f recipes/node/Dockerfile --cache-from eclipse/node -t camino.azurecr.io/eclipse/node recipes/node
         fi
-      displayName: "Building eclipse/node"
-    - script: docker push eclipse/node
-      displayName: "Pushing eclipse/node"
+      displayName: "Building camino.azurecr.io/eclipse/node"
+    - script: docker push camino.azurecr.io/eclipse/node
+      displayName: "Pushing camino.azurecr.io/eclipse/node"
 
 ### recipes/php/5.6/Dockerfile eclipse/php:5.6 depends on eclipse/stack-base:debian-jessie recipes/stack-base/debian-jessie
   - job: "recipes__php__5__6__Dockerfile"
@@ -1280,18 +1280,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/php:5.6
+        docker pull camino.azurecr.io/eclipse/php:5.6
         if [[ $? == 0 ]]; then
-          docker tag eclipse/php:5.6 eclipse/php:5.6
+          docker tag camino.azurecr.io/eclipse/php:5.6 eclipse/php:5.6
         else
           docker pull eclipse/php:5.6
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/php:5.6
         fi
-        docker pull eclipse/stack-base:debian-jessie
+        docker pull camino.azurecr.io/eclipse/stack-base:debian-jessie
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian-jessie eclipse/stack-base:debian-jessie
+          docker tag camino.azurecr.io/eclipse/stack-base:debian-jessie eclipse/stack-base:debian-jessie
         else
           docker pull eclipse/stack-base:debian-jessie
         fi
@@ -1304,13 +1304,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/php:5.6 =~ stack-base ]]; then
-          docker build -f recipes/php/5.6/Dockerfile -t eclipse/php:5.6 recipes/php/5.6
+          docker build -f recipes/php/5.6/Dockerfile -t camino.azurecr.io/eclipse/php:5.6 recipes/php/5.6
         else
-          docker build -f recipes/php/5.6/Dockerfile --cache-from eclipse/php:5.6 -t eclipse/php:5.6 recipes/php/5.6
+          docker build -f recipes/php/5.6/Dockerfile --cache-from eclipse/php:5.6 -t camino.azurecr.io/eclipse/php:5.6 recipes/php/5.6
         fi
-      displayName: "Building eclipse/php:5.6"
-    - script: docker push eclipse/php:5.6
-      displayName: "Pushing eclipse/php:5.6"
+      displayName: "Building camino.azurecr.io/eclipse/php:5.6"
+    - script: docker push camino.azurecr.io/eclipse/php:5.6
+      displayName: "Pushing camino.azurecr.io/eclipse/php:5.6"
 
 ### recipes/php/Dockerfile eclipse/php depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__php__Dockerfile"
@@ -1329,18 +1329,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/php
+        docker pull camino.azurecr.io/eclipse/php
         if [[ $? == 0 ]]; then
-          docker tag eclipse/php eclipse/php
+          docker tag camino.azurecr.io/eclipse/php eclipse/php
         else
           docker pull eclipse/php
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/php
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -1353,13 +1353,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/php =~ stack-base ]]; then
-          docker build -f recipes/php/Dockerfile -t eclipse/php recipes/php
+          docker build -f recipes/php/Dockerfile -t camino.azurecr.io/eclipse/php recipes/php
         else
-          docker build -f recipes/php/Dockerfile --cache-from eclipse/php -t eclipse/php recipes/php
+          docker build -f recipes/php/Dockerfile --cache-from eclipse/php -t camino.azurecr.io/eclipse/php recipes/php
         fi
-      displayName: "Building eclipse/php"
-    - script: docker push eclipse/php
-      displayName: "Pushing eclipse/php"
+      displayName: "Building camino.azurecr.io/eclipse/php"
+    - script: docker push camino.azurecr.io/eclipse/php
+      displayName: "Pushing camino.azurecr.io/eclipse/php"
 
 ### recipes/php/gae/Dockerfile eclipse/php:gae depends on eclipse/php recipes/php
   - job: "recipes__php__gae__Dockerfile"
@@ -1378,18 +1378,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/php:gae
+        docker pull camino.azurecr.io/eclipse/php:gae
         if [[ $? == 0 ]]; then
-          docker tag eclipse/php:gae eclipse/php:gae
+          docker tag camino.azurecr.io/eclipse/php:gae eclipse/php:gae
         else
           docker pull eclipse/php:gae
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/php:gae
         fi
-        docker pull eclipse/php
+        docker pull camino.azurecr.io/eclipse/php
         if [[ $? == 0 ]]; then
-          docker tag eclipse/php eclipse/php
+          docker tag camino.azurecr.io/eclipse/php eclipse/php
         else
           docker pull eclipse/php
         fi
@@ -1402,13 +1402,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/php:gae =~ stack-base ]]; then
-          docker build -f recipes/php/gae/Dockerfile -t eclipse/php:gae recipes/php/gae
+          docker build -f recipes/php/gae/Dockerfile -t camino.azurecr.io/eclipse/php:gae recipes/php/gae
         else
-          docker build -f recipes/php/gae/Dockerfile --cache-from eclipse/php:gae -t eclipse/php:gae recipes/php/gae
+          docker build -f recipes/php/gae/Dockerfile --cache-from eclipse/php:gae -t camino.azurecr.io/eclipse/php:gae recipes/php/gae
         fi
-      displayName: "Building eclipse/php:gae"
-    - script: docker push eclipse/php:gae
-      displayName: "Pushing eclipse/php:gae"
+      displayName: "Building camino.azurecr.io/eclipse/php:gae"
+    - script: docker push camino.azurecr.io/eclipse/php:gae
+      displayName: "Pushing camino.azurecr.io/eclipse/php:gae"
 
 ### recipes/php/laravel/Dockerfile eclipse/php:laravel depends on eclipse/php recipes/php
   - job: "recipes__php__laravel__Dockerfile"
@@ -1427,18 +1427,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/php:laravel
+        docker pull camino.azurecr.io/eclipse/php:laravel
         if [[ $? == 0 ]]; then
-          docker tag eclipse/php:laravel eclipse/php:laravel
+          docker tag camino.azurecr.io/eclipse/php:laravel eclipse/php:laravel
         else
           docker pull eclipse/php:laravel
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/php:laravel
         fi
-        docker pull eclipse/php
+        docker pull camino.azurecr.io/eclipse/php
         if [[ $? == 0 ]]; then
-          docker tag eclipse/php eclipse/php
+          docker tag camino.azurecr.io/eclipse/php eclipse/php
         else
           docker pull eclipse/php
         fi
@@ -1451,13 +1451,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/php:laravel =~ stack-base ]]; then
-          docker build -f recipes/php/laravel/Dockerfile -t eclipse/php:laravel recipes/php/laravel
+          docker build -f recipes/php/laravel/Dockerfile -t camino.azurecr.io/eclipse/php:laravel recipes/php/laravel
         else
-          docker build -f recipes/php/laravel/Dockerfile --cache-from eclipse/php:laravel -t eclipse/php:laravel recipes/php/laravel
+          docker build -f recipes/php/laravel/Dockerfile --cache-from eclipse/php:laravel -t camino.azurecr.io/eclipse/php:laravel recipes/php/laravel
         fi
-      displayName: "Building eclipse/php:laravel"
-    - script: docker push eclipse/php:laravel
-      displayName: "Pushing eclipse/php:laravel"
+      displayName: "Building camino.azurecr.io/eclipse/php:laravel"
+    - script: docker push camino.azurecr.io/eclipse/php:laravel
+      displayName: "Pushing camino.azurecr.io/eclipse/php:laravel"
 
 ### recipes/platformio/Dockerfile eclipse/platformio depends on eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
   - job: "recipes__platformio__Dockerfile"
@@ -1476,18 +1476,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/platformio
+        docker pull camino.azurecr.io/eclipse/platformio
         if [[ $? == 0 ]]; then
-          docker tag eclipse/platformio eclipse/platformio
+          docker tag camino.azurecr.io/eclipse/platformio eclipse/platformio
         else
           docker pull eclipse/platformio
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/platformio
         fi
-        docker pull eclipse/ubuntu_python:2.7
+        docker pull camino.azurecr.io/eclipse/ubuntu_python:2.7
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_python:2.7 eclipse/ubuntu_python:2.7
+          docker tag camino.azurecr.io/eclipse/ubuntu_python:2.7 eclipse/ubuntu_python:2.7
         else
           docker pull eclipse/ubuntu_python:2.7
         fi
@@ -1500,13 +1500,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/platformio =~ stack-base ]]; then
-          docker build -f recipes/platformio/Dockerfile -t eclipse/platformio recipes/platformio
+          docker build -f recipes/platformio/Dockerfile -t camino.azurecr.io/eclipse/platformio recipes/platformio
         else
-          docker build -f recipes/platformio/Dockerfile --cache-from eclipse/platformio -t eclipse/platformio recipes/platformio
+          docker build -f recipes/platformio/Dockerfile --cache-from eclipse/platformio -t camino.azurecr.io/eclipse/platformio recipes/platformio
         fi
-      displayName: "Building eclipse/platformio"
-    - script: docker push eclipse/platformio
-      displayName: "Pushing eclipse/platformio"
+      displayName: "Building camino.azurecr.io/eclipse/platformio"
+    - script: docker push camino.azurecr.io/eclipse/platformio
+      displayName: "Pushing camino.azurecr.io/eclipse/platformio"
 
 ### recipes/ruby_rails/Dockerfile eclipse/ruby_rails depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__ruby_rails__Dockerfile"
@@ -1525,18 +1525,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ruby_rails
+        docker pull camino.azurecr.io/eclipse/ruby_rails
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ruby_rails eclipse/ruby_rails
+          docker tag camino.azurecr.io/eclipse/ruby_rails eclipse/ruby_rails
         else
           docker pull eclipse/ruby_rails
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ruby_rails
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -1549,13 +1549,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ruby_rails =~ stack-base ]]; then
-          docker build -f recipes/ruby_rails/Dockerfile -t eclipse/ruby_rails recipes/ruby_rails
+          docker build -f recipes/ruby_rails/Dockerfile -t camino.azurecr.io/eclipse/ruby_rails recipes/ruby_rails
         else
-          docker build -f recipes/ruby_rails/Dockerfile --cache-from eclipse/ruby_rails -t eclipse/ruby_rails recipes/ruby_rails
+          docker build -f recipes/ruby_rails/Dockerfile --cache-from eclipse/ruby_rails -t camino.azurecr.io/eclipse/ruby_rails recipes/ruby_rails
         fi
-      displayName: "Building eclipse/ruby_rails"
-    - script: docker push eclipse/ruby_rails
-      displayName: "Pushing eclipse/ruby_rails"
+      displayName: "Building camino.azurecr.io/eclipse/ruby_rails"
+    - script: docker push camino.azurecr.io/eclipse/ruby_rails
+      displayName: "Pushing camino.azurecr.io/eclipse/ruby_rails"
 
 ### recipes/sails/Dockerfile eclipse/sails depends on eclipse/node recipes/node
   - job: "recipes__sails__Dockerfile"
@@ -1574,18 +1574,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/sails
+        docker pull camino.azurecr.io/eclipse/sails
         if [[ $? == 0 ]]; then
-          docker tag eclipse/sails eclipse/sails
+          docker tag camino.azurecr.io/eclipse/sails eclipse/sails
         else
           docker pull eclipse/sails
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/sails
         fi
-        docker pull eclipse/node
+        docker pull camino.azurecr.io/eclipse/node
         if [[ $? == 0 ]]; then
-          docker tag eclipse/node eclipse/node
+          docker tag camino.azurecr.io/eclipse/node eclipse/node
         else
           docker pull eclipse/node
         fi
@@ -1598,13 +1598,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/sails =~ stack-base ]]; then
-          docker build -f recipes/sails/Dockerfile -t eclipse/sails recipes/sails
+          docker build -f recipes/sails/Dockerfile -t camino.azurecr.io/eclipse/sails recipes/sails
         else
-          docker build -f recipes/sails/Dockerfile --cache-from eclipse/sails -t eclipse/sails recipes/sails
+          docker build -f recipes/sails/Dockerfile --cache-from eclipse/sails -t camino.azurecr.io/eclipse/sails recipes/sails
         fi
-      displayName: "Building eclipse/sails"
-    - script: docker push eclipse/sails
-      displayName: "Pushing eclipse/sails"
+      displayName: "Building camino.azurecr.io/eclipse/sails"
+    - script: docker push camino.azurecr.io/eclipse/sails
+      displayName: "Pushing camino.azurecr.io/eclipse/sails"
 
 ### recipes/selenium/Dockerfile eclipse/selenium depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__selenium__Dockerfile"
@@ -1623,18 +1623,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/selenium
+        docker pull camino.azurecr.io/eclipse/selenium
         if [[ $? == 0 ]]; then
-          docker tag eclipse/selenium eclipse/selenium
+          docker tag camino.azurecr.io/eclipse/selenium eclipse/selenium
         else
           docker pull eclipse/selenium
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/selenium
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -1647,13 +1647,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/selenium =~ stack-base ]]; then
-          docker build -f recipes/selenium/Dockerfile -t eclipse/selenium recipes/selenium
+          docker build -f recipes/selenium/Dockerfile -t camino.azurecr.io/eclipse/selenium recipes/selenium
         else
-          docker build -f recipes/selenium/Dockerfile --cache-from eclipse/selenium -t eclipse/selenium recipes/selenium
+          docker build -f recipes/selenium/Dockerfile --cache-from eclipse/selenium -t camino.azurecr.io/eclipse/selenium recipes/selenium
         fi
-      displayName: "Building eclipse/selenium"
-    - script: docker push eclipse/selenium
-      displayName: "Pushing eclipse/selenium"
+      displayName: "Building camino.azurecr.io/eclipse/selenium"
+    - script: docker push camino.azurecr.io/eclipse/selenium
+      displayName: "Pushing camino.azurecr.io/eclipse/selenium"
 
 ### recipes/stack-base/centos/Dockerfile eclipse/stack-base:centos depends on registry.centos.org/centos/centos registry.centos.org/centos/centos
   - job: "recipes__stack__base__centos__Dockerfile"
@@ -1671,18 +1671,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/stack-base:centos
+        docker pull camino.azurecr.io/eclipse/stack-base:centos
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:centos eclipse/stack-base:centos
+          docker tag camino.azurecr.io/eclipse/stack-base:centos eclipse/stack-base:centos
         else
           docker pull eclipse/stack-base:centos
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/stack-base:centos
         fi
-        docker pull registry.centos.org/centos/centos
+        docker pull camino.azurecr.io/registry.centos.org/centos/centos
         if [[ $? == 0 ]]; then
-          docker tag registry.centos.org/centos/centos registry.centos.org/centos/centos
+          docker tag camino.azurecr.io/registry.centos.org/centos/centos registry.centos.org/centos/centos
         else
           docker pull registry.centos.org/centos/centos
         fi
@@ -1695,13 +1695,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/stack-base:centos =~ stack-base ]]; then
-          docker build -f recipes/stack-base/centos/Dockerfile -t eclipse/stack-base:centos recipes/stack-base/centos
+          docker build -f recipes/stack-base/centos/Dockerfile -t camino.azurecr.io/eclipse/stack-base:centos recipes/stack-base/centos
         else
-          docker build -f recipes/stack-base/centos/Dockerfile --cache-from eclipse/stack-base:centos -t eclipse/stack-base:centos recipes/stack-base/centos
+          docker build -f recipes/stack-base/centos/Dockerfile --cache-from eclipse/stack-base:centos -t camino.azurecr.io/eclipse/stack-base:centos recipes/stack-base/centos
         fi
-      displayName: "Building eclipse/stack-base:centos"
-    - script: docker push eclipse/stack-base:centos
-      displayName: "Pushing eclipse/stack-base:centos"
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:centos"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:centos
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:centos"
 
 ### recipes/stack-base/debian/Dockerfile eclipse/stack-base:debian depends on debian:stretch debian/stretch
   - job: "recipes__stack__base__debian__Dockerfile"
@@ -1719,18 +1719,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/stack-base:debian
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian eclipse/stack-base:debian
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
         else
           docker pull eclipse/stack-base:debian
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/stack-base:debian
         fi
-        docker pull debian:stretch
+        docker pull camino.azurecr.io/debian:stretch
         if [[ $? == 0 ]]; then
-          docker tag debian:stretch debian:stretch
+          docker tag camino.azurecr.io/debian:stretch debian:stretch
         else
           docker pull debian:stretch
         fi
@@ -1743,13 +1743,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/stack-base:debian =~ stack-base ]]; then
-          docker build -f recipes/stack-base/debian/Dockerfile -t eclipse/stack-base:debian recipes/stack-base/debian
+          docker build -f recipes/stack-base/debian/Dockerfile -t camino.azurecr.io/eclipse/stack-base:debian recipes/stack-base/debian
         else
-          docker build -f recipes/stack-base/debian/Dockerfile --cache-from eclipse/stack-base:debian -t eclipse/stack-base:debian recipes/stack-base/debian
+          docker build -f recipes/stack-base/debian/Dockerfile --cache-from eclipse/stack-base:debian -t camino.azurecr.io/eclipse/stack-base:debian recipes/stack-base/debian
         fi
-      displayName: "Building eclipse/stack-base:debian"
-    - script: docker push eclipse/stack-base:debian
-      displayName: "Pushing eclipse/stack-base:debian"
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:debian"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:debian
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian"
 
 ### recipes/stack-base/debian-jessie/Dockerfile eclipse/stack-base:debian-jessie depends on debian:jessie-backports debian/jessie-backports
   - job: "recipes__stack__base__debian__jessie__Dockerfile"
@@ -1767,18 +1767,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/stack-base:debian-jessie
+        docker pull camino.azurecr.io/eclipse/stack-base:debian-jessie
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian-jessie eclipse/stack-base:debian-jessie
+          docker tag camino.azurecr.io/eclipse/stack-base:debian-jessie eclipse/stack-base:debian-jessie
         else
           docker pull eclipse/stack-base:debian-jessie
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/stack-base:debian-jessie
         fi
-        docker pull debian:jessie-backports
+        docker pull camino.azurecr.io/debian:jessie-backports
         if [[ $? == 0 ]]; then
-          docker tag debian:jessie-backports debian:jessie-backports
+          docker tag camino.azurecr.io/debian:jessie-backports debian:jessie-backports
         else
           docker pull debian:jessie-backports
         fi
@@ -1791,13 +1791,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/stack-base:debian-jessie =~ stack-base ]]; then
-          docker build -f recipes/stack-base/debian-jessie/Dockerfile -t eclipse/stack-base:debian-jessie recipes/stack-base/debian-jessie
+          docker build -f recipes/stack-base/debian-jessie/Dockerfile -t camino.azurecr.io/eclipse/stack-base:debian-jessie recipes/stack-base/debian-jessie
         else
-          docker build -f recipes/stack-base/debian-jessie/Dockerfile --cache-from eclipse/stack-base:debian-jessie -t eclipse/stack-base:debian-jessie recipes/stack-base/debian-jessie
+          docker build -f recipes/stack-base/debian-jessie/Dockerfile --cache-from eclipse/stack-base:debian-jessie -t camino.azurecr.io/eclipse/stack-base:debian-jessie recipes/stack-base/debian-jessie
         fi
-      displayName: "Building eclipse/stack-base:debian-jessie"
-    - script: docker push eclipse/stack-base:debian-jessie
-      displayName: "Pushing eclipse/stack-base:debian-jessie"
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:debian-jessie"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:debian-jessie
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian-jessie"
 
 ### recipes/stack-base/debian-stretch/Dockerfile eclipse/stack-base:debian-stretch depends on debian:stretch debian/stretch
   - job: "recipes__stack__base__debian__stretch__Dockerfile"
@@ -1815,18 +1815,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/stack-base:debian-stretch
+        docker pull camino.azurecr.io/eclipse/stack-base:debian-stretch
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian-stretch eclipse/stack-base:debian-stretch
+          docker tag camino.azurecr.io/eclipse/stack-base:debian-stretch eclipse/stack-base:debian-stretch
         else
           docker pull eclipse/stack-base:debian-stretch
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/stack-base:debian-stretch
         fi
-        docker pull debian:stretch
+        docker pull camino.azurecr.io/debian:stretch
         if [[ $? == 0 ]]; then
-          docker tag debian:stretch debian:stretch
+          docker tag camino.azurecr.io/debian:stretch debian:stretch
         else
           docker pull debian:stretch
         fi
@@ -1839,13 +1839,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/stack-base:debian-stretch =~ stack-base ]]; then
-          docker build -f recipes/stack-base/debian-stretch/Dockerfile -t eclipse/stack-base:debian-stretch recipes/stack-base/debian-stretch
+          docker build -f recipes/stack-base/debian-stretch/Dockerfile -t camino.azurecr.io/eclipse/stack-base:debian-stretch recipes/stack-base/debian-stretch
         else
-          docker build -f recipes/stack-base/debian-stretch/Dockerfile --cache-from eclipse/stack-base:debian-stretch -t eclipse/stack-base:debian-stretch recipes/stack-base/debian-stretch
+          docker build -f recipes/stack-base/debian-stretch/Dockerfile --cache-from eclipse/stack-base:debian-stretch -t camino.azurecr.io/eclipse/stack-base:debian-stretch recipes/stack-base/debian-stretch
         fi
-      displayName: "Building eclipse/stack-base:debian-stretch"
-    - script: docker push eclipse/stack-base:debian-stretch
-      displayName: "Pushing eclipse/stack-base:debian-stretch"
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:debian-stretch"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:debian-stretch
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:debian-stretch"
 
 ### recipes/stack-base/ubuntu/Dockerfile eclipse/stack-base:ubuntu depends on ubuntu:16.04 ubuntu/16.04
   - job: "recipes__stack__base__ubuntu__Dockerfile"
@@ -1863,18 +1863,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/stack-base:ubuntu
         fi
-        docker pull ubuntu:16.04
+        docker pull camino.azurecr.io/ubuntu:16.04
         if [[ $? == 0 ]]; then
-          docker tag ubuntu:16.04 ubuntu:16.04
+          docker tag camino.azurecr.io/ubuntu:16.04 ubuntu:16.04
         else
           docker pull ubuntu:16.04
         fi
@@ -1887,13 +1887,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/stack-base:ubuntu =~ stack-base ]]; then
-          docker build -f recipes/stack-base/ubuntu/Dockerfile -t eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+          docker build -f recipes/stack-base/ubuntu/Dockerfile -t camino.azurecr.io/eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
         else
-          docker build -f recipes/stack-base/ubuntu/Dockerfile --cache-from eclipse/stack-base:ubuntu -t eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
+          docker build -f recipes/stack-base/ubuntu/Dockerfile --cache-from eclipse/stack-base:ubuntu -t camino.azurecr.io/eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
         fi
-      displayName: "Building eclipse/stack-base:ubuntu"
-    - script: docker push eclipse/stack-base:ubuntu
-      displayName: "Pushing eclipse/stack-base:ubuntu"
+      displayName: "Building camino.azurecr.io/eclipse/stack-base:ubuntu"
+    - script: docker push camino.azurecr.io/eclipse/stack-base:ubuntu
+      displayName: "Pushing camino.azurecr.io/eclipse/stack-base:ubuntu"
 
 ### recipes/ubuntu_go/Dockerfile eclipse/ubuntu_go depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__ubuntu_go__Dockerfile"
@@ -1912,18 +1912,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ubuntu_go
+        docker pull camino.azurecr.io/eclipse/ubuntu_go
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_go eclipse/ubuntu_go
+          docker tag camino.azurecr.io/eclipse/ubuntu_go eclipse/ubuntu_go
         else
           docker pull eclipse/ubuntu_go
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ubuntu_go
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -1936,13 +1936,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ubuntu_go =~ stack-base ]]; then
-          docker build -f recipes/ubuntu_go/Dockerfile -t eclipse/ubuntu_go recipes/ubuntu_go
+          docker build -f recipes/ubuntu_go/Dockerfile -t camino.azurecr.io/eclipse/ubuntu_go recipes/ubuntu_go
         else
-          docker build -f recipes/ubuntu_go/Dockerfile --cache-from eclipse/ubuntu_go -t eclipse/ubuntu_go recipes/ubuntu_go
+          docker build -f recipes/ubuntu_go/Dockerfile --cache-from eclipse/ubuntu_go -t camino.azurecr.io/eclipse/ubuntu_go recipes/ubuntu_go
         fi
-      displayName: "Building eclipse/ubuntu_go"
-    - script: docker push eclipse/ubuntu_go
-      displayName: "Pushing eclipse/ubuntu_go"
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_go"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_go
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_go"
 
 ### recipes/ubuntu_gradle/Dockerfile eclipse/ubuntu_gradle depends on eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
   - job: "recipes__ubuntu_gradle__Dockerfile"
@@ -1961,18 +1961,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ubuntu_gradle
+        docker pull camino.azurecr.io/eclipse/ubuntu_gradle
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_gradle eclipse/ubuntu_gradle
+          docker tag camino.azurecr.io/eclipse/ubuntu_gradle eclipse/ubuntu_gradle
         else
           docker pull eclipse/ubuntu_gradle
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ubuntu_gradle
         fi
-        docker pull eclipse/ubuntu_jdk8
+        docker pull camino.azurecr.io/eclipse/ubuntu_jdk8
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
+          docker tag camino.azurecr.io/eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
         else
           docker pull eclipse/ubuntu_jdk8
         fi
@@ -1985,13 +1985,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ubuntu_gradle =~ stack-base ]]; then
-          docker build -f recipes/ubuntu_gradle/Dockerfile -t eclipse/ubuntu_gradle recipes/ubuntu_gradle
+          docker build -f recipes/ubuntu_gradle/Dockerfile -t camino.azurecr.io/eclipse/ubuntu_gradle recipes/ubuntu_gradle
         else
-          docker build -f recipes/ubuntu_gradle/Dockerfile --cache-from eclipse/ubuntu_gradle -t eclipse/ubuntu_gradle recipes/ubuntu_gradle
+          docker build -f recipes/ubuntu_gradle/Dockerfile --cache-from eclipse/ubuntu_gradle -t camino.azurecr.io/eclipse/ubuntu_gradle recipes/ubuntu_gradle
         fi
-      displayName: "Building eclipse/ubuntu_gradle"
-    - script: docker push eclipse/ubuntu_gradle
-      displayName: "Pushing eclipse/ubuntu_gradle"
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_gradle"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_gradle
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_gradle"
 
 ### recipes/ubuntu_jdk8/Dockerfile eclipse/ubuntu_jdk8 depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__ubuntu_jdk8__Dockerfile"
@@ -2010,18 +2010,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ubuntu_jdk8
+        docker pull camino.azurecr.io/eclipse/ubuntu_jdk8
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
+          docker tag camino.azurecr.io/eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
         else
           docker pull eclipse/ubuntu_jdk8
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ubuntu_jdk8
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -2034,13 +2034,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ubuntu_jdk8 =~ stack-base ]]; then
-          docker build -f recipes/ubuntu_jdk8/Dockerfile -t eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
+          docker build -f recipes/ubuntu_jdk8/Dockerfile -t camino.azurecr.io/eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
         else
-          docker build -f recipes/ubuntu_jdk8/Dockerfile --cache-from eclipse/ubuntu_jdk8 -t eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
+          docker build -f recipes/ubuntu_jdk8/Dockerfile --cache-from eclipse/ubuntu_jdk8 -t camino.azurecr.io/eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
         fi
-      displayName: "Building eclipse/ubuntu_jdk8"
-    - script: docker push eclipse/ubuntu_jdk8
-      displayName: "Pushing eclipse/ubuntu_jdk8"
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_jdk8"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_jdk8
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_jdk8"
 
 ### recipes/ubuntu_python/2.7/Dockerfile eclipse/ubuntu_python:2.7 depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__ubuntu_python__2__7__Dockerfile"
@@ -2059,18 +2059,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ubuntu_python:2.7
+        docker pull camino.azurecr.io/eclipse/ubuntu_python:2.7
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_python:2.7 eclipse/ubuntu_python:2.7
+          docker tag camino.azurecr.io/eclipse/ubuntu_python:2.7 eclipse/ubuntu_python:2.7
         else
           docker pull eclipse/ubuntu_python:2.7
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ubuntu_python:2.7
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -2083,13 +2083,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ubuntu_python:2.7 =~ stack-base ]]; then
-          docker build -f recipes/ubuntu_python/2.7/Dockerfile -t eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
+          docker build -f recipes/ubuntu_python/2.7/Dockerfile -t camino.azurecr.io/eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
         else
-          docker build -f recipes/ubuntu_python/2.7/Dockerfile --cache-from eclipse/ubuntu_python:2.7 -t eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
+          docker build -f recipes/ubuntu_python/2.7/Dockerfile --cache-from eclipse/ubuntu_python:2.7 -t camino.azurecr.io/eclipse/ubuntu_python:2.7 recipes/ubuntu_python/2.7
         fi
-      displayName: "Building eclipse/ubuntu_python:2.7"
-    - script: docker push eclipse/ubuntu_python:2.7
-      displayName: "Pushing eclipse/ubuntu_python:2.7"
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_python:2.7"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_python:2.7
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python:2.7"
 
 ### recipes/ubuntu_python/Dockerfile eclipse/ubuntu_python depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__ubuntu_python__Dockerfile"
@@ -2108,18 +2108,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ubuntu_python
+        docker pull camino.azurecr.io/eclipse/ubuntu_python
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_python eclipse/ubuntu_python
+          docker tag camino.azurecr.io/eclipse/ubuntu_python eclipse/ubuntu_python
         else
           docker pull eclipse/ubuntu_python
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ubuntu_python
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -2132,13 +2132,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ubuntu_python =~ stack-base ]]; then
-          docker build -f recipes/ubuntu_python/Dockerfile -t eclipse/ubuntu_python recipes/ubuntu_python
+          docker build -f recipes/ubuntu_python/Dockerfile -t camino.azurecr.io/eclipse/ubuntu_python recipes/ubuntu_python
         else
-          docker build -f recipes/ubuntu_python/Dockerfile --cache-from eclipse/ubuntu_python -t eclipse/ubuntu_python recipes/ubuntu_python
+          docker build -f recipes/ubuntu_python/Dockerfile --cache-from eclipse/ubuntu_python -t camino.azurecr.io/eclipse/ubuntu_python recipes/ubuntu_python
         fi
-      displayName: "Building eclipse/ubuntu_python"
-    - script: docker push eclipse/ubuntu_python
-      displayName: "Pushing eclipse/ubuntu_python"
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_python"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_python
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python"
 
 ### recipes/ubuntu_python/gae_python2.7/Dockerfile eclipse/ubuntu_python:gae_python2.7 depends on eclipse/stack-base:debian recipes/stack-base/debian
   - job: "recipes__ubuntu_python__gae_python2__7__Dockerfile"
@@ -2157,18 +2157,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ubuntu_python:gae_python2.7
+        docker pull camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_python:gae_python2.7 eclipse/ubuntu_python:gae_python2.7
+          docker tag camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7 eclipse/ubuntu_python:gae_python2.7
         else
           docker pull eclipse/ubuntu_python:gae_python2.7
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ubuntu_python:gae_python2.7
         fi
-        docker pull eclipse/stack-base:debian
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian eclipse/stack-base:debian
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
         else
           docker pull eclipse/stack-base:debian
         fi
@@ -2181,13 +2181,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ubuntu_python:gae_python2.7 =~ stack-base ]]; then
-          docker build -f recipes/ubuntu_python/gae_python2.7/Dockerfile -t eclipse/ubuntu_python:gae_python2.7 recipes/ubuntu_python/gae_python2.7
+          docker build -f recipes/ubuntu_python/gae_python2.7/Dockerfile -t camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7 recipes/ubuntu_python/gae_python2.7
         else
-          docker build -f recipes/ubuntu_python/gae_python2.7/Dockerfile --cache-from eclipse/ubuntu_python:gae_python2.7 -t eclipse/ubuntu_python:gae_python2.7 recipes/ubuntu_python/gae_python2.7
+          docker build -f recipes/ubuntu_python/gae_python2.7/Dockerfile --cache-from eclipse/ubuntu_python:gae_python2.7 -t camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7 recipes/ubuntu_python/gae_python2.7
         fi
-      displayName: "Building eclipse/ubuntu_python:gae_python2.7"
-    - script: docker push eclipse/ubuntu_python:gae_python2.7
-      displayName: "Pushing eclipse/ubuntu_python:gae_python2.7"
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python:gae_python2.7"
 
 ### recipes/ubuntu_python/gae_python3/Dockerfile eclipse/ubuntu_python:gae_python3 depends on eclipse/stack-base:debian recipes/stack-base/debian
   - job: "recipes__ubuntu_python__gae_python3__Dockerfile"
@@ -2206,18 +2206,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ubuntu_python:gae_python3
+        docker pull camino.azurecr.io/eclipse/ubuntu_python:gae_python3
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_python:gae_python3 eclipse/ubuntu_python:gae_python3
+          docker tag camino.azurecr.io/eclipse/ubuntu_python:gae_python3 eclipse/ubuntu_python:gae_python3
         else
           docker pull eclipse/ubuntu_python:gae_python3
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ubuntu_python:gae_python3
         fi
-        docker pull eclipse/stack-base:debian
+        docker pull camino.azurecr.io/eclipse/stack-base:debian
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:debian eclipse/stack-base:debian
+          docker tag camino.azurecr.io/eclipse/stack-base:debian eclipse/stack-base:debian
         else
           docker pull eclipse/stack-base:debian
         fi
@@ -2230,13 +2230,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ubuntu_python:gae_python3 =~ stack-base ]]; then
-          docker build -f recipes/ubuntu_python/gae_python3/Dockerfile -t eclipse/ubuntu_python:gae_python3 recipes/ubuntu_python/gae_python3
+          docker build -f recipes/ubuntu_python/gae_python3/Dockerfile -t camino.azurecr.io/eclipse/ubuntu_python:gae_python3 recipes/ubuntu_python/gae_python3
         else
-          docker build -f recipes/ubuntu_python/gae_python3/Dockerfile --cache-from eclipse/ubuntu_python:gae_python3 -t eclipse/ubuntu_python:gae_python3 recipes/ubuntu_python/gae_python3
+          docker build -f recipes/ubuntu_python/gae_python3/Dockerfile --cache-from eclipse/ubuntu_python:gae_python3 -t camino.azurecr.io/eclipse/ubuntu_python:gae_python3 recipes/ubuntu_python/gae_python3
         fi
-      displayName: "Building eclipse/ubuntu_python:gae_python3"
-    - script: docker push eclipse/ubuntu_python:gae_python3
-      displayName: "Pushing eclipse/ubuntu_python:gae_python3"
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_python:gae_python3"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_python:gae_python3
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_python:gae_python3"
 
 ### recipes/ubuntu_rlang/Dockerfile eclipse/ubuntu_rlang depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__ubuntu_rlang__Dockerfile"
@@ -2255,18 +2255,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ubuntu_rlang
+        docker pull camino.azurecr.io/eclipse/ubuntu_rlang
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_rlang eclipse/ubuntu_rlang
+          docker tag camino.azurecr.io/eclipse/ubuntu_rlang eclipse/ubuntu_rlang
         else
           docker pull eclipse/ubuntu_rlang
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ubuntu_rlang
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -2279,13 +2279,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ubuntu_rlang =~ stack-base ]]; then
-          docker build -f recipes/ubuntu_rlang/Dockerfile -t eclipse/ubuntu_rlang recipes/ubuntu_rlang
+          docker build -f recipes/ubuntu_rlang/Dockerfile -t camino.azurecr.io/eclipse/ubuntu_rlang recipes/ubuntu_rlang
         else
-          docker build -f recipes/ubuntu_rlang/Dockerfile --cache-from eclipse/ubuntu_rlang -t eclipse/ubuntu_rlang recipes/ubuntu_rlang
+          docker build -f recipes/ubuntu_rlang/Dockerfile --cache-from eclipse/ubuntu_rlang -t camino.azurecr.io/eclipse/ubuntu_rlang recipes/ubuntu_rlang
         fi
-      displayName: "Building eclipse/ubuntu_rlang"
-    - script: docker push eclipse/ubuntu_rlang
-      displayName: "Pushing eclipse/ubuntu_rlang"
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_rlang"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_rlang
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_rlang"
 
 ### recipes/ubuntu_wildfly8/Dockerfile eclipse/ubuntu_wildfly8 depends on eclipse/stack-base:ubuntu recipes/stack-base/ubuntu
   - job: "recipes__ubuntu_wildfly8__Dockerfile"
@@ -2304,18 +2304,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/ubuntu_wildfly8
+        docker pull camino.azurecr.io/eclipse/ubuntu_wildfly8
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_wildfly8 eclipse/ubuntu_wildfly8
+          docker tag camino.azurecr.io/eclipse/ubuntu_wildfly8 eclipse/ubuntu_wildfly8
         else
           docker pull eclipse/ubuntu_wildfly8
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/ubuntu_wildfly8
         fi
-        docker pull eclipse/stack-base:ubuntu
+        docker pull camino.azurecr.io/eclipse/stack-base:ubuntu
         if [[ $? == 0 ]]; then
-          docker tag eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
+          docker tag camino.azurecr.io/eclipse/stack-base:ubuntu eclipse/stack-base:ubuntu
         else
           docker pull eclipse/stack-base:ubuntu
         fi
@@ -2328,13 +2328,13 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/ubuntu_wildfly8 =~ stack-base ]]; then
-          docker build -f recipes/ubuntu_wildfly8/Dockerfile -t eclipse/ubuntu_wildfly8 recipes/ubuntu_wildfly8
+          docker build -f recipes/ubuntu_wildfly8/Dockerfile -t camino.azurecr.io/eclipse/ubuntu_wildfly8 recipes/ubuntu_wildfly8
         else
-          docker build -f recipes/ubuntu_wildfly8/Dockerfile --cache-from eclipse/ubuntu_wildfly8 -t eclipse/ubuntu_wildfly8 recipes/ubuntu_wildfly8
+          docker build -f recipes/ubuntu_wildfly8/Dockerfile --cache-from eclipse/ubuntu_wildfly8 -t camino.azurecr.io/eclipse/ubuntu_wildfly8 recipes/ubuntu_wildfly8
         fi
-      displayName: "Building eclipse/ubuntu_wildfly8"
-    - script: docker push eclipse/ubuntu_wildfly8
-      displayName: "Pushing eclipse/ubuntu_wildfly8"
+      displayName: "Building camino.azurecr.io/eclipse/ubuntu_wildfly8"
+    - script: docker push camino.azurecr.io/eclipse/ubuntu_wildfly8
+      displayName: "Pushing camino.azurecr.io/eclipse/ubuntu_wildfly8"
 
 ### recipes/x11_vnc/Dockerfile eclipse/x11_vnc depends on eclipse/ubuntu_jdk8 recipes/ubuntu_jdk8
   - job: "recipes__x11_vnc__Dockerfile"
@@ -2353,18 +2353,18 @@ jobs:
 
     - script: |
         set +e
-        docker pull eclipse/x11_vnc
+        docker pull camino.azurecr.io/eclipse/x11_vnc
         if [[ $? == 0 ]]; then
-          docker tag eclipse/x11_vnc eclipse/x11_vnc
+          docker tag camino.azurecr.io/eclipse/x11_vnc eclipse/x11_vnc
         else
           docker pull eclipse/x11_vnc
         fi
         if [[ $? != 0 ]]; then
           docker tag scratch eclipse/x11_vnc
         fi
-        docker pull eclipse/ubuntu_jdk8
+        docker pull camino.azurecr.io/eclipse/ubuntu_jdk8
         if [[ $? == 0 ]]; then
-          docker tag eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
+          docker tag camino.azurecr.io/eclipse/ubuntu_jdk8 eclipse/ubuntu_jdk8
         else
           docker pull eclipse/ubuntu_jdk8
         fi
@@ -2377,10 +2377,10 @@ jobs:
       displayName: "Pulling cache. (errors will be ignored)"
     - script: |
         if [[ eclipse/x11_vnc =~ stack-base ]]; then
-          docker build -f recipes/x11_vnc/Dockerfile -t eclipse/x11_vnc recipes/x11_vnc
+          docker build -f recipes/x11_vnc/Dockerfile -t camino.azurecr.io/eclipse/x11_vnc recipes/x11_vnc
         else
-          docker build -f recipes/x11_vnc/Dockerfile --cache-from eclipse/x11_vnc -t eclipse/x11_vnc recipes/x11_vnc
+          docker build -f recipes/x11_vnc/Dockerfile --cache-from eclipse/x11_vnc -t camino.azurecr.io/eclipse/x11_vnc recipes/x11_vnc
         fi
-      displayName: "Building eclipse/x11_vnc"
-    - script: docker push eclipse/x11_vnc
-      displayName: "Pushing eclipse/x11_vnc"
+      displayName: "Building camino.azurecr.io/eclipse/x11_vnc"
+    - script: docker push camino.azurecr.io/eclipse/x11_vnc
+      displayName: "Pushing camino.azurecr.io/eclipse/x11_vnc"
