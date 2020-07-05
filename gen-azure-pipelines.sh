@@ -71,7 +71,12 @@ cat <<__BODY
       continueOnError: true
       failOnStderr: false
       displayName: "Pulling cache. (errors will be ignored)"
-    - script: docker build -f $dockerfile --cache-from $tag -t $pushtag ${dockerfile%/*}
+    - script: |
+        if [[ $tag =~ stack-base ]]; then
+          docker build -f $dockerfile -t $pushtag ${dockerfile%/*}
+        else
+          docker build -f $dockerfile --cache-from $tag -t $pushtag ${dockerfile%/*}
+        fi
       displayName: "Building $pushtag"
     - script: docker push $pushtag
       displayName: "Pushing $pushtag"
