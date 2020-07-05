@@ -24,6 +24,8 @@ RUN apt-get update && \
     mc \
     ca-certificates \
     curl \
+    apt-transport-https \
+    ca-certificates \
     software-properties-common \
     python-software-properties \
     bash-completion && \
